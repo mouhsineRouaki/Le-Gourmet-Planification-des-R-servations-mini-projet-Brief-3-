@@ -26,10 +26,16 @@ body{
     position: fixed
     
 }
-.cover{
+#cover{
     display: none;
     position: fixed;
     inset: 0%;
     background-color: black;
     opacity: 80%;
+}
+#formAjout.formAjoutToggle{
+    display: block;
+}
+#cover.formAjoutToggle{
+    display: block;
 }
