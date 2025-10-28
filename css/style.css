@@ -18,11 +18,16 @@ body{
     border: 2px solid black;
     text-align: right;
 }
+.days p{
+    border: 2px solid black;
+    text-align: left;
+}
 #formAjout{
+    width: 50%;
     display: none;
     left: 25%;
     right: 25%;
-    top: 20%;
+    top: 0%;
     position: fixed
     
 }
@@ -38,4 +43,13 @@ body{
 }
 #cover.formAjoutToggle{
     display: block;
+}
+@media screen and (max-width:769px){
+    #formAjout{
+        top: 5%;
+        width: 100%;
+        left: 0%;
+        right: 0%;
+    }
+    
 }
