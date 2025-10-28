@@ -1,0 +1,28 @@
+body{
+    overflow-x: hidden;
+}
+.prev-btn{
+    cursor: pointer;
+}
+.next-btn{
+    cursor: pointer;
+}
+
+.days{
+    display: grid;
+    grid-template-columns: repeat(7 , 1fr);
+    grid-template-rows: repeat(6 , 200px);
+    
+}
+.days div{
+    border: 2px solid black;
+    text-align: right;
+}
+#formAjout{
+    display: ;
+    left: 25%;
+    right: 25%;
+    top: 10%;
+    position: absolute
+    
+}
