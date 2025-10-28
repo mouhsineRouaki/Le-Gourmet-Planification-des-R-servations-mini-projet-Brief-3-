@@ -19,10 +19,17 @@ body{
     text-align: right;
 }
 #formAjout{
-    display: ;
+    display: none;
     left: 25%;
     right: 25%;
-    top: 10%;
-    position: absolute
+    top: 20%;
+    position: fixed
     
+}
+.cover{
+    display: none;
+    position: fixed;
+    inset: 0%;
+    background-color: black;
+    opacity: 80%;
 }
