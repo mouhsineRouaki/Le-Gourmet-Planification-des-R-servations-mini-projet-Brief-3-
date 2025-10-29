@@ -1,98 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gourmet - Réservations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+<body class="bg-light">
+  <header class="mb-5 shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed">
+      <div class="container justify-content-between align-items-center">
+        <span class="text-white fs-2 fw-bold prev-btn" role="button">&lt;</span>
+        <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
+        <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="row text-center fw-semibold mb-3 text-secondary weekdays">
+      <div class="col">Dim</div>
+      <div class="col">Lun</div>
+      <div class="col">Mar</div>
+      <div class="col">Mer</div>
+      <div class="col">Jeu</div>
+      <div class="col">Ven</div>
+      <div class="col">Sam</div>
+    </div>
+    <div class="days shadow-sm border bg-white rounded-3 mb-5"></div>
+  </main>
 
-<body>
-    <header class="group-toolbar mb-100">
-        <nav class="navbar  navbar-dark bg-dark">
-            <div class="row container-fluid">
-                <span class="col text-white fs-1 fw-bold prev-btn"><</span>
-                <h3 class="col text-white text-center month">Jeunery 2005</h3>
-                <span class="col text-white text-end fs-1 fw-bold next-btn">></span>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <div class="container-Gourmet">
-            <div class="row text-center weekdays">
-                <div class="col fw-bold fs-5 day">Sun</div>
-                <div class="col fw-bold fs-5 day">Mon</div>
-                <div class="col fw-bold fs-5 day">Tue</div>
-                <div class="col fw-bold fs-5 day">Wed</div>
-                <div class="col fw-bold fs-5 day">Thu</div>
-                <div class="col fw-bold fs-5 day">Fri</div>
-                <div class="col fw-bold fs-5 day">Sat</div>
-            </div>
-            <div class="days">
+  <div id="cover"></div>
 
-            </div>
+  <form id="formAjout" class="card p-4 shadow-lg border-0 rounded-3">
+    <button type="button" class="btn-close float-end"></button>
+    <h5 class="fw-bold mb-4">Créer une réservation</h5>
 
-        </div>
-        <div id="cover"></div>
-        <form id="formAjout"  class="card border rounded p-1">
-            <span class="fs-4 float-right">x</span>
+    <div class="mb-3">
+      <label for="titre" class="form-label">Titre</label>
+      <input type="text" id="titre" class="form-control">
+    </div>
 
-            <div class="form-outline mb-4 mt-4">
-                <label class="form-label" for="titre">Titre de réservation</label>
-                <input type="text" id="titre" class="form-control" />
-            </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input type="text" id="description" class="form-control">
+    </div>
 
-            <div class="form-outline mb-2">
-                <label class="form-label" for="description">Description</label>
-                <input type="text" id="description" class="form-control" />
-            </div>
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="heure-debut" class="form-label">Heure de début</label>
+        <input type="time" id="heure-debut" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="heure-fin" class="form-label">Heure de fin</label>
+        <input type="time" id="heure-fin" class="form-control">
+      </div>
+    </div>
 
-            <div class="form-outline mb-2">
-                <label class="form-label" for="heure-debut">Heure de début</label>
-                <input type="time" id="heure-debut" class="form-control" />
-            </div>
+    <div class="row g-2 mt-3">
+      <div class="col-md-6">
+        <label for="nb-personne" class="form-label">Nombre de personnes</label>
+        <input type="number" id="nb-personne" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="type" class="form-label">Type</label>
+        <select id="type" class="form-select">
+          <option>Standard</option>
+          <option>Groupe</option>
+          <option>VIP</option>
+        </select>
+      </div>
+    </div>
 
-            <div class="form-outline mb-2">
-                <label class="form-label" for="heure-fin">Heure de fin</label>
-                <input type="time" id="heure-fin" class="form-control" />
-            </div>
+    <div class="mt-3">
+      <label for="date" class="form-label">Date</label>
+      <input type="date" id="date" class="form-control">
+    </div>
 
-            <div class="form-outline mb-2">
-                <label class="form-label" for="nb-personne">Nombre de personnes</label>
-                <input type="number" id="nb-personne" class="form-control" />
-            </div>
+    <button type="submit" id="btnCreate" class="btn btn-primary w-100 mt-4">
+      Créer la réservation
+    </button>
+  </form>
 
-            <div class="form-outline mb-2">
-                <label class="form-label" for="type">Type</label>
-                <input type="text" id="type" class="form-control" />
-            </div>
+  <form id="formModifSuppr" class="card p-4 shadow-lg border-0 rounded-3">
+    <button type="button" class="btn-close float-end"></button>
+    <h5 class="fw-bold mb-4">Modifier / Supprimer une réservation</h5>
 
-            <div class="form-outline mb-1">
-                <label class="form-label" for="date">Date de réservation</label>
-                <input type="date" id="date" class="form-control" />
-            </div>
+    <div class="mb-3">
+      <label for="titreModifSuppr" class="form-label">Titre</label>
+      <input type="text" id="titreModifSuppr" class="form-control">
+    </div>
 
-            <button type="submit" id="btnCreate" class="btn btn-primary btn-block mb-4">
-                Créer la réservation
-            </button>
-        </form>
+    <div class="mb-3">
+      <label for="descriptionModifSuppr" class="form-label">Description</label>
+      <input type="text" id="descriptionModifSuppr" class="form-control">
+    </div>
 
-    </main>
-    <footer>
+    <div class="row g-2">
+      <div class="col-md-6">
+        <label for="heure-debutModifSuppr" class="form-label">Heure de début</label>
+        <input type="time" id="heure-debutModifSuppr" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="heure-finModifSuppr" class="form-label">Heure de fin</label>
+        <input type="time" id="heure-finModifSuppr" class="form-control">
+      </div>
+    </div>
 
-    </footer>
+    <div class="row g-2 mt-3">
+      <div class="col-md-6">
+        <label for="nb-personneModifSuppr" class="form-label">Nombre de personnes</label>
+        <input type="number" id="nb-personneModifSuppr" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="typeModifSuppr" class="form-label">Type</label>
+        <select id="typeModifSuppr" class="form-select">
+          <option>Standard</option>
+          <option>Groupe</option>
+          <option>VIP</option>
+        </select>
+      </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+    <div class="mt-3">
+      <label for="dateModifSuppr" class="form-label">Date</label>
+      <input type="date" id="dateModifSuppr" class="form-control">
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+      <button id="btnModifier" class="btn btn-warning w-50">Modifier</button>
+      <button id="btnSupprimer" class="btn btn-danger w-50">Supprimer</button>
+    </div>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
-
 </html>
