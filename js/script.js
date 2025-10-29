@@ -4,6 +4,7 @@ const prevbtn = document.querySelector(".prev-btn");
 const month = document.querySelector(".month");
 const InputDate = document.getElementById("date");
 const cardAjout = document.getElementById("formAjout");
+const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -19,7 +20,7 @@ class Reservation{
     };
 };
 
-let restauration = [new Reservation("2025-8-28","mohsin" , "jksh" , "jkdf" , "hhh" , "shfj" , "jksfd")]; 
+let restauration = [new Reservation("2025-8-28","mohsin" , "jksh" , "jkdf" , "hhh" , "shfj" , "Vip")]; 
 refreshRestauration(restauration);
 
 
@@ -78,6 +79,7 @@ function aficherCard(){
     cover.addEventListener('click' , function(){
         this.classList.remove("formAjoutToggle");
         cardAjout.classList.remove("formAjoutToggle");
+        cardModifierSupprimer.classList.remove("formModifSuppr");
     });
 
     for(let i = 0 ; i < divCalendrier.length;i++){
@@ -124,7 +126,35 @@ function Gourmet(){
             for(let j = 0 ; j < resrvationDay.length ;j++){
                 let p = document.createElement("p");
                 p.textContent = resrvationDay[j].titre;
-                p.style.backgroundColor = "red"
+                if(resrvationDay[j].type === 'Vip'){
+                    p.style.backgroundColor = "red";
+                }else if(resrvationDay[j].type === 'standard'){
+                    p.style.backgroundColor = "green";
+                }
+                else{
+                    p.style.backgroundColor = "bleu";
+                }
+                
+                p.addEventListener('click' , function(){
+                    cardModifierSupprimer.classList.toggle("formModifSuppr");
+                    const btnModifier = document.getElementById("btnModifier");
+                    const btnSupprimer = document.getElementById("btnModifier");
+                    btnSupprimer.addEventListener('click' , function(){
+                        supprimerReservation(resrvationDay[j].id);
+                    });
+                    const titre = document.getElementById("titreModifSuppr");
+                    const description = document.getElementById("descriptionModifSuppr");
+                    const heureBedut = document.getElementById("heure-debutModifSuppr");
+                    const heureFin = document.getElementById("heure-finModifSuppr");
+                    const nbPersone = document.getElementById("nb-personneModifSuppr");
+                    const type = document.getElementById("typeModifSuppr");
+                    titre.value = resrvationDay[j].titre;
+                    description.value = resrvationDay[j].description;
+                    heureBedut.value = resrvationDay[j].heureBedut;
+                    heureFin.value =resrvationDay[j].heureFin;
+                    nbPersone.value = resrvationDay[j].nbPersone;
+                    type.value = resrvationDay[j].type;
+                });
                 dayDiv.append(p);
             }
         }
@@ -139,7 +169,35 @@ function Gourmet(){
             for(let j = 0 ; j < resrvationDay.length ;j++){
                 let p = document.createElement("p");
                 p.textContent = resrvationDay[j].titre;
-                p.style.backgroundColor = "red"
+                if(resrvationDay[j].type === 'Vip'){
+                    p.style.backgroundColor = "red";
+                }else if(resrvationDay[j].type === 'standard'){
+                    p.style.backgroundColor = "green";
+                }
+                else{
+                    p.style.backgroundColor = "bleu";
+                }
+                
+                p.addEventListener('click' , function(){
+                    cardModifierSupprimer.classList.toggle("formModifSuppr");
+                    const btnModifier = document.getElementById("btnModifier");
+                    const btnSupprimer = document.getElementById("btnModifier");
+                    btnSupprimer.addEventListener('click' , function(){
+                        supprimerReservation(resrvationDay[j].id);
+                    });
+                    const titre = document.getElementById("titreModifSuppr");
+                    const description = document.getElementById("descriptionModifSuppr");
+                    const heureBedut = document.getElementById("heure-debutModifSuppr");
+                    const heureFin = document.getElementById("heure-finModifSuppr");
+                    const nbPersone = document.getElementById("nb-personneModifSuppr");
+                    const type = document.getElementById("typeModifSuppr");
+                    titre.value = resrvationDay[j].titre;
+                    description.value = resrvationDay[j].description;
+                    heureBedut.value = resrvationDay[j].heureBedut;
+                    heureFin.value =resrvationDay[j].heureFin;
+                    nbPersone.value = resrvationDay[j].nbPersone;
+                    type.value = resrvationDay[j].type;
+                });
                 dayDiv.append(p);
             }
         }
@@ -154,7 +212,7 @@ function clearCalendrier(){
 }
 
 function updateDate(nb){
-    date.setMonth(date.getMonth() + nb)
+    date.setMonth(date.getMonth() + nb);
     updateMonthYear();
     clearCalendrier();
     Gourmet();
@@ -171,11 +229,4 @@ prevbtn.addEventListener('click' ,function(){
 
 
 aficherCard();
-
-
-
-
-
-  
-
 
