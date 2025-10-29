@@ -83,7 +83,57 @@
             <button type="submit" id="btnCreate" class="btn btn-primary btn-block mb-4">
                 Créer la réservation
             </button>
+            
         </form>
+        <form id="formModifSuppr"  class="card border rounded p-1">
+            <span class="fs-4 float-right">x</span>
+
+            <div class="form-outline mb-4 mt-4">
+                <label class="form-label" for="titreModifSuppr">Titre de réservation</label>
+                <input type="text" id="titreModifSuppr" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <label class="form-label" for="descriptionModifSuppr">Description</label>
+                <input type="text" id="descriptionModifSuppr" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <label class="form-label" for="heure-debutModifSuppr">Heure de début</label>
+                <input type="time" id="heure-debutModifSuppr" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <label class="form-label" for="heure-finModifSuppr">Heure de fin</label>
+                <input type="time" id="heure-finModifSuppr" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <label class="form-label" for="nb-personneModifSuppr">Nombre de personnes</label>
+                <input type="number" id="nb-personneModifSuppr" class="form-control" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <label class="form-label" for="dateModifSuppr">Type de réservation</label>
+                <select class="form-control" id="typeModifSuppr">
+                    <option>standard</option>
+                    <option>groupe</option>
+                    <option>Vip</option>
+                </select>
+            </div>
+
+            <div class="form-outline mb-1">
+                <label class="form-label" for="date">Date de réservation</label>
+                <input type="date" id="date" class="form-control" />
+            </div>
+
+            <button  id="btnModifier" class="btn btn-primary btn-block mb-4">
+                Modifier la réservation
+            </button>
+            <button  id="btnSupprimer" class="btn btn-primary btn-block mb-4">
+                Supprimer la réservation
+            </button>
+
 
     </main>
     <footer>
