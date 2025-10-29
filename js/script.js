@@ -8,7 +8,7 @@ const months = ["January","February","March","April","May","June","July","August
 const date = new Date();
 
 class Reservation{
-    constructor({id = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}` , titre, description ,heureBedut,heureFin,nbPersone,type}){
+    constructor(id , titre, description ,heureBedut,heureFin,nbPersone,type ){
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -19,20 +19,20 @@ class Reservation{
     };
 };
 
-let restauration = [];
+let restauration = [new Reservation("2025-8-28","mohsin" , "jksh" , "jkdf" , "hhh" , "shfj" , "jksfd")]; 
+refreshRestauration(restauration);
 
-localStorage.setItem("restauration" ,JSON.stringify(restauration));
 
 function refreshRestauration(restauration){
     restauration = JSON.parse(localStorage.getItem("reservations"));
 }
-refreshRestauration(restauration);
+
 
 function addReservation(reservation) {
     restauration.push(reservation);
     localStorage.setItem("restauration" ,JSON.stringify(restauration));
 };
-function getReservations(idReservation){
+function getReservationById(idReservation){
     let listReservation  = [];
     for(let i = 0 ; i < restauration.length; i++){
         if(restauration[i].id == idReservation){
@@ -53,7 +53,7 @@ function modiffierReservation(idReservation, titre, description, heureBedut, heu
             restauration.type = type;
         }
     }
-    refreshRestauration(restauration);
+    localStorage.setItem("restauration" ,JSON.stringify(restauration));
 }
 function supprimerReservation(idReservation){
     for(let i = 0 ; i < restauration.length; i++){
@@ -93,16 +93,17 @@ function aficherCard(){
                 const heureFin = document.getElementById("heure-fin").value;
                 const nbPersone = document.getElementById("nb-personne").value;
                 const type = document.getElementById("type").value;
+                const idReservation = divCalendrier[i].id;
 
-                const nouvelleReservation = new Reservation({titre,description,heureBedut,heureFin,nbPersone,type});
+                const nouvelleReservation = new Reservation(idReservation,titre,description,heureBedut,heureFin,nbPersone,type);
                 addReservation(nouvelleReservation);
-                let reseravtions = getReservations(nouvelleReservation.id);
-                const p = document.createElement("p");
-                p.setAttribute('draggable' , 'true');
-                p.textContent = titre;
-                p.style.backgroundColor = "red" ;
-                divCalendrier[i].append(p);
+                clearCalendrier();
+                Gourmet();
+                aficherCard();
 
+                cover.classList.remove("formAjoutToggle");
+                cardAjout.classList.remove("formAjoutToggle");
+                cardAjout.reset();
             });
         });
     }
@@ -118,7 +119,7 @@ function Gourmet(){
         const dayDiv = document.createElement("div");
         dayDiv.id = `${date.getFullYear()}-${date.getMonth()-1}-${derniereMonthDay -i +1}`;
         dayDiv.textContent = derniereMonthDay -i +1;
-        let resrvationDay=getReservations(dayDiv.id);
+        let resrvationDay=getReservationById(dayDiv.id);
         if(resrvationDay.length !=  0){
             for(let j = 0 ; j < resrvationDay.length ;j++){
                 let p = document.createElement("p");
@@ -133,14 +134,13 @@ function Gourmet(){
         const dayDiv = document.createElement("div");
         dayDiv.textContent =  i ;
         dayDiv.id = `${date.getFullYear()}-${date.getMonth()}-${i}`;
-        let resrvationDay=getReservations(dayDiv.id);
+        let resrvationDay=getReservationById(dayDiv.id);
         if(resrvationDay.length !=  0){
             for(let j = 0 ; j < resrvationDay.length ;j++){
                 let p = document.createElement("p");
                 p.textContent = resrvationDay[j].titre;
                 p.style.backgroundColor = "red"
                 dayDiv.append(p);
-                
             }
         }
         Containerdays.append(dayDiv);
