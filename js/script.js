@@ -76,7 +76,7 @@ function appendReservations(dayDiv) {
     let reservationsJour = getReservationById(dayDiv.id);
     const titre = document.getElementById("titreModifSuppr");
     const description = document.getElementById("descriptionModifSuppr");
-    const heureBedut = document.getElementById("debutModifSuppr");
+    const heureDebut = document.getElementById("heure-debutModifSuppr");
     const heureFin = document.getElementById("heure-finModifSuppr");
     const nbPersone = document.getElementById("nb-personneModifSuppr");
     const type = document.getElementById("typeModifSuppr");
@@ -91,12 +91,12 @@ function appendReservations(dayDiv) {
 
             titre.value = res.titre;
             description.value = res.description;
-            heureBedut.value =res.heureBedut;
+            heureDebut.value = res.heureBedut;
             heureFin.value = res.heureFin;
             nbPersone.value = res.nbPersone;
             type.value = res.type;
-            date.value = res.date;
-            console.log()
+            let dataTransfer = new Date(dayDiv.id)
+            date.value = `${TransferDate.getFullYear()}-${String(TransferDate.getMonth()+1).padStart(2, '0')}-${String(TransferDate.getDate()).padStart(2, '0')}`;
 
         })
         if(res.type === 'VIP'){
@@ -145,7 +145,7 @@ function aficherCard(){
     });
 }
 
-// Un seul listener de soumission
+// submit form ajout 
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
 
@@ -163,7 +163,7 @@ cardAjout.addEventListener('submit', function(event){
     const nouvelleReservation = new Reservation(StringDateId, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
 
-    Gourmet(); // 🔄 on recharge le calendrier (pas aficherCard)
+    Gourmet();
     aficherCard();
 
     document.getElementById("cover").classList.remove("formAjoutToggle");
