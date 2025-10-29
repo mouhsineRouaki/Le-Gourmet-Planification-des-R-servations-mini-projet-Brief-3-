@@ -31,12 +31,24 @@ body{
     position: fixed
     
 }
+#formModifSuppr{
+    width: 50%;
+    display: none;
+    left: 25%;
+    right: 25%;
+    top: 0%;
+    position: fixed
+    
+}
 #cover{
     display: none;
     position: fixed;
     inset: 0%;
     background-color: black;
     opacity: 80%;
+}
+#formModifSuppr.formModifSuppr{
+    display: block;
 }
 #formAjout.formAjoutToggle{
     display: block;
