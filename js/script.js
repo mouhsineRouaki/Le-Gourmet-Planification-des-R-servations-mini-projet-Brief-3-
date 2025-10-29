@@ -4,6 +4,7 @@ const prevbtn = document.querySelector(".prev-btn");
 const month = document.querySelector(".month");
 const InputDate = document.getElementById("date");
 const cardAjout = document.getElementById("formAjout");
+const cover = document.getElementById("cover");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
@@ -17,6 +18,7 @@ class Reservation{
         this.heureFin = heureFin;
         this.nbPersone = nbPersone;
         this.type = type;
+
     };
 };
 
@@ -63,7 +65,7 @@ function Gourmet(){
     // Jours du mois courant
     for(let i = 1; i <= lastDay; i++){
         const dayDiv = document.createElement("div");
-        dayDiv.id = `${date.getFullYear()}-${date.getMonth()}-${i}`;
+        dayDiv.id = `${date.getFullYear()}-${date.getMonth()+1}-${i}`;
         dayDiv.textContent = i;
         appendReservations(dayDiv);
         Containerdays.append(dayDiv);
@@ -72,10 +74,31 @@ function Gourmet(){
 
 function appendReservations(dayDiv) {
     let reservationsJour = getReservationById(dayDiv.id);
+    const titre = document.getElementById("titreModifSuppr");
+    const description = document.getElementById("descriptionModifSuppr");
+    const heureBedut = document.getElementById("debutModifSuppr");
+    const heureFin = document.getElementById("heure-finModifSuppr");
+    const nbPersone = document.getElementById("nb-personneModifSuppr");
+    const type = document.getElementById("typeModifSuppr");
+    const date = document.getElementById("dateModifSuppr");
     reservationsJour.forEach(res => {
         let p = document.createElement("p");
         p.textContent = res.titre;
-        
+        p.addEventListener('click' , function(){
+
+            cardModifierSupprimer.classList.add("formModifSupprToggle");
+            cover.classList.add("formAjoutToggle");
+
+            titre.value = res.titre;
+            description.value = res.description;
+            heureBedut.value =res.heureBedut;
+            heureFin.value = res.heureFin;
+            nbPersone.value = res.nbPersone;
+            type.value = res.type;
+            date.value = res.date;
+            console.log()
+
+        })
         if(res.type === 'VIP'){
             p.style.backgroundColor = "red";
         } else if(res.type === 'Standard'){
@@ -91,13 +114,13 @@ function updateDate(nb){
     date.setMonth(date.getMonth() + nb);
     updateMonthYear();
     Gourmet();
+    aficherCard();
 }
 
 // Navigation mois
 nextbtn.addEventListener('click' ,() => updateDate(1));
 prevbtn.addEventListener('click' ,() => updateDate(-1));
 
-let selectedDayId = null;
 
 function aficherCard(){
     const divCalendrier = document.querySelectorAll(".days div");
@@ -107,15 +130,17 @@ function aficherCard(){
     cover.addEventListener('click' , function(){
         this.classList.remove("formAjoutToggle");
         cardAjout.classList.remove("formAjoutToggle");
-        cardModifierSupprimer.classList.remove("formModifSuppr");
+        cardModifierSupprimer.classList.remove("formModifSupprToggle");
     });
 
     // Quand on clique sur un jour → ouvrir formulaire et sauvegarder l’ID
     divCalendrier.forEach(div => {
         div.addEventListener('click', function(){
-            selectedDayId = this.id;
             cover.classList.add("formAjoutToggle");
             cardAjout.classList.add("formAjoutToggle");
+            let TransferDate = new Date(div.id);
+            InputDate.value = `${TransferDate.getFullYear()}-${String(TransferDate.getMonth()+1).padStart(2, '0')}-${String(TransferDate.getDate()).padStart(2, '0')}`;
+
         });
     });
 }
@@ -124,16 +149,18 @@ function aficherCard(){
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
 
-    if (!selectedDayId) return;
-
     const titre = document.getElementById("titre").value;
     const description = document.getElementById("description").value;
     const heureBedut = document.getElementById("heure-debut").value;
     const heureFin = document.getElementById("heure-fin").value;
     const nbPersone = document.getElementById("nb-personne").value;
     const type = document.getElementById("type").value;
+    const date = document.getElementById("date").value;
+    let dateGenerate = new Date(date);
+    let StringDateId = `${dateGenerate.getFullYear()}-${dateGenerate.getMonth()+1}-${dateGenerate.getDate()}`;
+    
 
-    const nouvelleReservation = new Reservation(selectedDayId, titre, description, heureBedut, heureFin, nbPersone, type);
+    const nouvelleReservation = new Reservation(StringDateId, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
 
     Gourmet(); // 🔄 on recharge le calendrier (pas aficherCard)
@@ -141,6 +168,7 @@ cardAjout.addEventListener('submit', function(event){
 
     document.getElementById("cover").classList.remove("formAjoutToggle");
     cardAjout.classList.remove("formAjoutToggle");
+    cardAjout.reset();
 });
 
 // Initialisation
