@@ -174,7 +174,6 @@ function appendReservations(dayDiv) {
         cardTitle.className = "card-title mb-0";
         cardTitle.textContent = res.titre;
 
-        // Détails: date début/fin et nb personne
         let cardText = document.createElement("p");
         cardText.className = "card-text mb-0 small";
         cardText.textContent = `${res.heureBedut} - ${res.heureFin} | ${res.nbPersone} personne(s)`;
