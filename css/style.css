@@ -59,6 +59,7 @@ body {
 .disable-div {
     background-color: #484b4f;
     cursor: not-allowed;
+    opacity: 0.5;
 }
 
 
