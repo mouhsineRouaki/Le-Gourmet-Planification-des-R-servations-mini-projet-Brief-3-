@@ -1,3 +1,16 @@
+class Reservation{
+    constructor( id , date ,titre, description ,heureBedut,heureFin,nbPersone,type ){
+        this.id = id;
+        this.date = date;
+        this.titre = titre;
+        this.description = description;
+        this.heureBedut = heureBedut;
+        this.heureFin = heureFin;
+        this.nbPersone = nbPersone;
+        this.type = type;
+    };
+};
+
 const Containerdays = document.querySelector(".days");
 const nextbtn = document.querySelector(".next-btn");
 const prevbtn = document.querySelector(".prev-btn");
@@ -11,44 +24,33 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
-class Reservation{
-    constructor(id , titre, description ,heureBedut,heureFin,nbPersone,type ){
-        this.id = id;
-        this.titre = titre;
-        this.description = description;
-        this.heureBedut = heureBedut;
-        this.heureFin = heureFin;
-        this.nbPersone = nbPersone;
-        this.type = type;
 
-    };
-};
 
-let restauration = JSON.parse(localStorage.getItem("restauration")) || []; 
+let restauration = JSON.parse(localStorage.getItem("reservationsA")) || []; 
 
 function addReservation(reservation) {
     restauration.push(reservation);
-    localStorage.setItem("restauration" ,JSON.stringify(restauration));
-}
+    localStorage.setItem("reservationsA" ,JSON.stringify(restauration));
+};
 
 function getReservationById(idReservation){
-    return restauration.filter(r => r.id === idReservation);
-}
-function updateReservation(idReservation, titre, nouvelleReservation) {
+    return restauration.filter( res => res.date === idReservation);
+};
+
+function updateReservation(idReservation, nouvelleReservation) {
     for (let i = 0; i < restauration.length; i++) {
-        if (restauration[i].id === idReservation && restauration[i].titre === titre) {
+        if (restauration[i].id === idReservation ) {
             restauration[i] = nouvelleReservation;
-            localStorage.setItem("restauration", JSON.stringify(restauration));
+            localStorage.setItem("reservationsA", JSON.stringify(restauration));
             break;
         }
     }
 }
 
 
-function supprimerReservation(idReservation,titre){
-    console.log(idReservation, titre)
-    restauration = restauration.filter(r => r.id !== idReservation && r.titre !== titre);
-    localStorage.setItem("restauration" ,JSON.stringify(restauration));
+function supprimerReservation(idReservation){
+    restauration = restauration.filter(r => r.id !== idReservation );
+    localStorage.setItem("reservationsA" ,JSON.stringify(restauration));
 }
 
 function updateMonthYear(){
@@ -115,7 +117,7 @@ function appendReservations(dayDiv) {
             const newBtnModifier = document.getElementById("btnModifier");
             const newBtnSupprimer = document.getElementById("btnSupprimer");
 
-            // ✅ Modifier
+            //  modifier reservation
             newBtnModifier.addEventListener('click', function(){
                 const titreNouvelle = titre.value;
                 const descNouvelle = description.value;
@@ -127,8 +129,8 @@ function appendReservations(dayDiv) {
                 const dateModif = new Date(date.value);
                 const newDateId = `${dateModif.getFullYear()}-${dateModif.getMonth()+1}-${dateModif.getDate()}`;
 
-                const nouvelleReservation = new Reservation(newDateId, titreNouvelle, descNouvelle, hDebutNouvelle, hFinNouvelle, nbPersNouvelle, typeNouvelle);
-                updateReservation(res.id, res.titre, nouvelleReservation);
+                const nouvelleReservation = new Reservation(res.id,newDateId, titreNouvelle, descNouvelle, hDebutNouvelle, hFinNouvelle, nbPersNouvelle, typeNouvelle);
+                updateReservation(res.id, nouvelleReservation);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
@@ -137,7 +139,7 @@ function appendReservations(dayDiv) {
 
             //  Supprimer Reservation
             newBtnSupprimer.addEventListener('click', function(){
-                supprimerReservation(res.id, res.titre);
+                supprimerReservation(res.id);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
@@ -206,7 +208,7 @@ cardAjout.addEventListener('submit', function(event){
     let StringDateId = `${dateGenerate.getFullYear()}-${dateGenerate.getMonth()+1}-${dateGenerate.getDate()}`;
     
 
-    const nouvelleReservation = new Reservation(StringDateId, titre, description, heureBedut, heureFin, nbPersone, type);
+    const nouvelleReservation = new Reservation(Date.now(),StringDateId, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
 
     Gourmet();
