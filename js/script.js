@@ -135,7 +135,14 @@ function appendReservations(dayDiv) {
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
             });
 
-           
+            //  Supprimer Reservation
+            newBtnSupprimer.addEventListener('click', function(){
+                supprimerReservation(res.id, res.titre);
+                Gourmet();
+                aficherCard();
+                cover.classList.remove("formAjoutToggle");
+                cardModifierSupprimer.classList.remove("formModifSupprToggle");
+            });
         });
 
         if(res.type === 'VIP'){
