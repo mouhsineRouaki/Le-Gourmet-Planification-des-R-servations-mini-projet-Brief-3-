@@ -219,7 +219,6 @@ cardAjout.addEventListener('submit', function(event){
     cardAjout.reset();
 });
 
-// Initialisation
 updateMonthYear();
 Gourmet();
 aficherCard();
