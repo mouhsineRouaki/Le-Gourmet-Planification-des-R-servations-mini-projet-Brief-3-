@@ -167,7 +167,6 @@ function appendReservations(dayDiv) {
             card.style.backgroundColor = "rgba(0,0,255,0.2)";
         }
 
-        // Card body
         let cardBody = document.createElement("div");
         cardBody.className = "card-body p-1"; // padding réduit
 
