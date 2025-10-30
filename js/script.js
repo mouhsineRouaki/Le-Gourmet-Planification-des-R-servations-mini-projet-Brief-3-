@@ -48,7 +48,13 @@ function updateReservation(idReservation, nouvelleReservation) {
     }
 }
 function reservationBytitre(titre){
-    restauration = restauration.filter(res => res.titre === titre);
+    let nouvelleList = [];
+    for (let i = 0; i < restauration.length; i++) {
+        if (restauration[i].titre == titre) {
+            nouvelleList.push(restauration[i]);
+        }
+    }
+    restauration = nouvelleList;
 }
 
 function supprimerReservation(idReservation){
@@ -276,6 +282,7 @@ cardAjout.addEventListener('submit', function(event){
 });
 rechercheInput.addEventListener("input" ,()=>{
     let titreRecherche = rechercheInput.value;
+    console.log(restauration);
     if(titreRecherche.length > 0 ){
         reservationBytitre(titreRecherche);
         Gourmet();
