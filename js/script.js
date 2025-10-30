@@ -26,6 +26,7 @@ const filterSelect =  document.getElementById("selectReservation");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
+
 let restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []; 
 
 function addReservation(reservation) {
@@ -45,6 +46,9 @@ function updateReservation(idReservation, nouvelleReservation) {
             break;
         }
     }
+}
+function reservationBytitre(titre){
+    restauration=restauration.filter(res => res.titre === titre);
 }
 
 function supprimerReservation(idReservation){
@@ -269,6 +273,12 @@ cardAjout.addEventListener('submit', function(event){
     document.getElementById("cover").classList.remove("formAjoutToggle");
     cardAjout.classList.remove("formAjoutToggle");
     cardAjout.reset();
+});
+rechercheInput.addEventListener("input" ,()=>{
+    let titreRecherche = rechercheInput.value;
+    reservationBytitre(titreRecherche);
+    Gourmet();
+    aficherCard();
 });
 
 updateMonthYear();
