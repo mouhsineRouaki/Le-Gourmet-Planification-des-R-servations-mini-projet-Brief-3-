@@ -181,7 +181,6 @@ function appendReservations(dayDiv) {
         cardBody.append(cardText);
         card.append(cardBody);
 
-        // draggable
         card.draggable = true;
         card.addEventListener('dragstart', e => {
             e.dataTransfer.setData("reservationId", res.id);
