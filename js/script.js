@@ -53,7 +53,8 @@ function reservationByTitre(titre) {
 }
 function reservationByType(type){
     type = type.trim().toLowerCase();
-    return restauration.filter(r => r.type.trim().toLowerCase()=== type);
+    let list;
+    return list = restauration.filter(r => r.type.trim().toLowerCase()=== type);
 }
 
 function supprimerReservation(idReservation){
@@ -293,7 +294,28 @@ rechercheInput.addEventListener("input" ,()=>{
     aficherCard();
     
 });
-filterSelect.addEventListener('change');
+let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
+
+filterSelect.addEventListener('change', () => {
+    let listeFiltre;
+    switch(filterSelect.value){
+        case "Tous":
+            listeFiltre = baseDonnees;
+            break;
+        case "Groupe":
+            listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "groupe");
+            break;
+        case "VIP":
+            listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "vip");
+            break;
+        case "Standard":
+            listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "standard");
+            break;
+    }
+    restauration = listeFiltre;
+    Gourmet();
+    aficherCard();
+});
 
 updateMonthYear();
 Gourmet();
