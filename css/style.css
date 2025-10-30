@@ -56,6 +56,13 @@ body {
   display: block !important;
 }
 
+.disable-div {
+    background-color: #7e8388;
+    pointer-events: none;
+    user-select: none;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .days {
