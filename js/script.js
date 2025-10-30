@@ -293,6 +293,7 @@ rechercheInput.addEventListener("input" ,()=>{
     aficherCard();
     
 });
+filterSelect.addEventListener();
 
 updateMonthYear();
 Gourmet();
