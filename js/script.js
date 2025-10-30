@@ -156,14 +156,44 @@ function appendReservations(dayDiv) {
     const date = document.getElementById("dateModifSuppr");
 
     reservationsJour.forEach(res => {
-        let p = document.createElement("div");
-        p.textContent = res.titre;
-        p.draggable = true;
-        p.addEventListener('dragstart' , (e)=>{
-            e.dataTransfer.setData("reservationId",res.id);
-        })
+        let card = document.createElement("div");
+        card.className = "card mb-1";  // Bootstrap card avec marge
+        card.style.cursor = "pointer";
+        if (res.type === 'VIP') {
+            card.style.backgroundColor = "rgba(255,0,0,0.2)";
+        } else if (res.type === 'Standard') {
+            card.style.backgroundColor = "rgba(0,255,0,0.2)";
+        } else {
+            card.style.backgroundColor = "rgba(0,0,255,0.2)";
+        }
 
-        p.addEventListener('click', function() {
+        // Card body
+        let cardBody = document.createElement("div");
+        cardBody.className = "card-body p-1"; // padding réduit
+
+        // Titre
+        let cardTitle = document.createElement("h6");
+        cardTitle.className = "card-title mb-0";
+        cardTitle.textContent = res.titre;
+
+        // Détails: date début/fin et nb personne
+        let cardText = document.createElement("p");
+        cardText.className = "card-text mb-0 small";
+        cardText.textContent = `${res.heureBedut} - ${res.heureFin} | ${res.nbPersone} personne(s)`;
+
+        // Ajouter titre et texte au body
+        cardBody.append(cardTitle);
+        cardBody.append(cardText);
+        card.append(cardBody);
+
+        // draggable
+        card.draggable = true;
+        card.addEventListener('dragstart', e => {
+            e.dataTransfer.setData("reservationId", res.id);
+        });
+
+        // click pour modifier/supprimer
+        card.addEventListener('click', function() {
             cardModifierSupprimer.classList.add("formModifSupprToggle");
             cover.classList.add("formAjoutToggle");
 
@@ -173,54 +203,42 @@ function appendReservations(dayDiv) {
             heureFin.value = res.heureFin;
             nbPersone.value = res.nbPersone;
             type.value = res.type;
-
             const dataTransfer = new Date(dayDiv.id);
-            date.value = `${dataTransfer.getFullYear()}-${String(dataTransfer.getMonth() + 1).padStart(2, '0')}-${String(dataTransfer.getDate()).padStart(2, '0')}`;
+            date.value = `${dataTransfer.getFullYear()}-${String(dataTransfer.getMonth() + 1).padStart(2,'0')}-${String(dataTransfer.getDate()).padStart(2,'0')}`;
 
             const newBtnModifier = document.getElementById("btnModifier");
             const newBtnSupprimer = document.getElementById("btnSupprimer");
 
-            // Modifier réservation
-            newBtnModifier.onclick = function() {
+            newBtnModifier.onclick = function(event) {
+                event.preventDefault();
                 let newDate = new Date(date.value)
-                let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
+                let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
-                    res.id,
-                    valeurDate,
-                    titre.value,
-                    description.value,
-                    heureDebut.value,
-                    heureFin.value,
-                    nbPersone.value,
-                    type.value
+                    res.id, valeurDate, titre.value, description.value,
+                    heureDebut.value, heureFin.value, nbPersone.value, type.value
                 );
                 updateReservation(res.id, nouvelleReservation);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
-            };
+            }
 
-            // Supprimer réservation
-            newBtnSupprimer.onclick = function() {
+            newBtnSupprimer.onclick = function(event) {
+                event.preventDefault();
                 supprimerReservation(res.id);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
-            };
+            }
         });
 
-        if (res.type === 'VIP') {
-            p.style.backgroundColor = "red";
-        } else if (res.type === 'Standard') {
-            p.style.backgroundColor = "green";
-        } else {
-            p.style.backgroundColor = "blue";
-        }
-        dayDiv.append(p);
+        // Ajouter la card au jour
+        dayDiv.append(card);
     });
 }
+
 
 function updateDate(nb){
     date.setMonth(date.getMonth() + nb);
@@ -281,6 +299,12 @@ cardAjout.addEventListener('submit', function(event){
     cardAjout.classList.remove("formAjoutToggle");
     cardAjout.reset();
 });
+rechercheInput.addEventListener("focus" ,()=>{
+    filterSelect.value = "tous" ; 
+    restauration = JSON.parse(localStorage.getItem("baseDonnes")) || [];
+    Gourmet();
+    aficherCard();
+})
 rechercheInput.addEventListener("input" ,()=>{
     let titreRecherche = rechercheInput.value;
     let listeFiltre;
