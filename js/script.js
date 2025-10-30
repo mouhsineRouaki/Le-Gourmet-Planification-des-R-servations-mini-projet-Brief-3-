@@ -5,6 +5,8 @@ const month = document.querySelector(".month");
 const InputDate = document.getElementById("date");
 const cardAjout = document.getElementById("formAjout");
 const cover = document.getElementById("cover");
+const btnModifier = document.getElementById("btnModifier");
+const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
@@ -32,9 +34,20 @@ function addReservation(reservation) {
 function getReservationById(idReservation){
     return restauration.filter(r => r.id === idReservation);
 }
+function updateReservation(idReservation, titre, nouvelleReservation) {
+    for (let i = 0; i < restauration.length; i++) {
+        if (restauration[i].id === idReservation && restauration[i].titre === titre) {
+            restauration[i] = nouvelleReservation;
+            localStorage.setItem("restauration", JSON.stringify(restauration));
+            break;
+        }
+    }
+}
 
-function supprimerReservation(idReservation){
-    restauration = restauration.filter(r => r.id !== idReservation);
+
+function supprimerReservation(idReservation,titre){
+    console.log(idReservation, titre)
+    restauration = restauration.filter(r => r.id !== idReservation && r.titre !== titre);
     localStorage.setItem("restauration" ,JSON.stringify(restauration));
 }
 
@@ -53,7 +66,7 @@ function Gourmet(){
     const lastDay = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
     const derniereMonthDay = new Date(date.getFullYear(), date.getMonth(),0).getDate();
 
-    // Jours du mois précédent
+    // Jours du mois precedent
     for(let i = firstDay; i > 0;i--){
         const dayDiv = document.createElement("div");
         dayDiv.id = `${date.getFullYear()}-${date.getMonth()-1}-${derniereMonthDay -i +1}`;
@@ -84,8 +97,7 @@ function appendReservations(dayDiv) {
     reservationsJour.forEach(res => {
         let p = document.createElement("p");
         p.textContent = res.titre;
-        p.addEventListener('click' , function(){
-
+        p.addEventListener('click', function() {
             cardModifierSupprimer.classList.add("formModifSupprToggle");
             cover.classList.add("formAjoutToggle");
 
@@ -95,10 +107,37 @@ function appendReservations(dayDiv) {
             heureFin.value = res.heureFin;
             nbPersone.value = res.nbPersone;
             type.value = res.type;
-            let dataTransfer = new Date(dayDiv.id)
-            date.value = `${TransferDate.getFullYear()}-${String(TransferDate.getMonth()+1).padStart(2, '0')}-${String(TransferDate.getDate()).padStart(2, '0')}`;
 
-        })
+            const dataTransfer = new Date(dayDiv.id);
+            date.value = `${dataTransfer.getFullYear()}-${String(dataTransfer.getMonth()+1).padStart(2, '0')}-${String(dataTransfer.getDate()).padStart(2, '0')}`;
+
+
+            const newBtnModifier = document.getElementById("btnModifier");
+            const newBtnSupprimer = document.getElementById("btnSupprimer");
+
+            // ✅ Modifier
+            newBtnModifier.addEventListener('click', function(){
+                const titreNouvelle = titre.value;
+                const descNouvelle = description.value;
+                const hDebutNouvelle = heureDebut.value;
+                const hFinNouvelle = heureFin.value;
+                const nbPersNouvelle = nbPersone.value;
+                const typeNouvelle = type.value;
+
+                const dateModif = new Date(date.value);
+                const newDateId = `${dateModif.getFullYear()}-${dateModif.getMonth()+1}-${dateModif.getDate()}`;
+
+                const nouvelleReservation = new Reservation(newDateId, titreNouvelle, descNouvelle, hDebutNouvelle, hFinNouvelle, nbPersNouvelle, typeNouvelle);
+                updateReservation(res.id, res.titre, nouvelleReservation);
+                Gourmet();
+                aficherCard();
+                cover.classList.remove("formAjoutToggle");
+                cardModifierSupprimer.classList.remove("formModifSupprToggle");
+            });
+
+           
+        });
+
         if(res.type === 'VIP'){
             p.style.backgroundColor = "red";
         } else if(res.type === 'Standard'){
@@ -117,7 +156,7 @@ function updateDate(nb){
     aficherCard();
 }
 
-// Navigation mois
+// navigation mois
 nextbtn.addEventListener('click' ,() => updateDate(1));
 prevbtn.addEventListener('click' ,() => updateDate(-1));
 
@@ -133,7 +172,7 @@ function aficherCard(){
         cardModifierSupprimer.classList.remove("formModifSupprToggle");
     });
 
-    // Quand on clique sur un jour → ouvrir formulaire et sauvegarder l’ID
+    // Quand on clique sur un jour il ouvrir formulaire
     divCalendrier.forEach(div => {
         div.addEventListener('click', function(){
             cover.classList.add("formAjoutToggle");
