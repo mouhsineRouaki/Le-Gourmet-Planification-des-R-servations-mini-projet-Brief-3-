@@ -1,5 +1,5 @@
-class Reservation{
-    constructor( id , date ,titre, description ,heureBedut,heureFin,nbPersone,type ){
+class Reservation {
+    constructor(id, date, titre, description, heureBedut, heureFin, nbPersone, type) {
         this.id = id;
         this.date = date;
         this.titre = titre;
@@ -8,8 +8,8 @@ class Reservation{
         this.heureFin = heureFin;
         this.nbPersone = nbPersone;
         this.type = type;
-    };
-};
+    }
+}
 
 const Containerdays = document.querySelector(".days");
 const nextbtn = document.querySelector(".next-btn");
@@ -22,25 +22,22 @@ const btnModifier = document.getElementById("btnModifier");
 const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const daysJourne = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const date = new Date();
-
-
 
 let restauration = JSON.parse(localStorage.getItem("reservationsA")) || []; 
 
 function addReservation(reservation) {
     restauration.push(reservation);
-    localStorage.setItem("reservationsA" ,JSON.stringify(restauration));
-};
+    localStorage.setItem("reservationsA", JSON.stringify(restauration));
+}
 
 function getReservationById(idReservation){
-    return restauration.filter( res => res.date === idReservation);
-};
+    return restauration.filter(res => res.date === idReservation);
+}
 
 function updateReservation(idReservation, nouvelleReservation) {
     for (let i = 0; i < restauration.length; i++) {
-        if (restauration[i].id === idReservation ) {
+        if (restauration[i].id === idReservation) {
             restauration[i] = nouvelleReservation;
             localStorage.setItem("reservationsA", JSON.stringify(restauration));
             break;
@@ -48,10 +45,9 @@ function updateReservation(idReservation, nouvelleReservation) {
     }
 }
 
-
 function supprimerReservation(idReservation){
-    restauration = restauration.filter(r => r.id !== idReservation );
-    localStorage.setItem("reservationsA" ,JSON.stringify(restauration));
+    restauration = restauration.filter(r => r.id !== idReservation);
+    localStorage.setItem("reservationsA", JSON.stringify(restauration));
 }
 
 function updateMonthYear(){
@@ -65,28 +61,39 @@ function clearCalendrier(){
 function Gourmet(){
     clearCalendrier();
     date.setDate(1);
+
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-    const lastDay = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
-    const derniereMonthDay = new Date(date.getFullYear(), date.getMonth(),0).getDate();
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    const derniereMonthDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
 
     // Jours du mois precedent
-    for(let i = firstDay; i > 0;i--){
+    for (let i = firstDay; i > 0; i--) {
         const dayDiv = document.createElement("div");
-        dayDiv.id = `${date.getFullYear()}-${date.getMonth()-1}-${derniereMonthDay -i +1}`;
-        dayDiv.textContent = derniereMonthDay -i +1;
+        dayDiv.id = `${date.getFullYear()}-${date.getMonth()}-${derniereMonthDay - i + 1}`;
+        dayDiv.textContent = derniereMonthDay - i + 1;
+
+        const dayOfWeek = new Date(date.getFullYear(), date.getMonth() - 1, derniereMonthDay - i + 1).getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            dayDiv.classList.add("disable-div");
+            dayDiv.style.opacity = "0.5";
+        }
+
         appendReservations(dayDiv);
         Containerdays.append(dayDiv);
     }
 
-    // Jours du mois courant
-    for(let i = 1; i <= lastDay; i++){
+    //Jours du mois courant 
+    for (let i = 1; i <= lastDay; i++) {
         const dayDiv = document.createElement("div");
-        dayDiv.id = `${date.getFullYear()}-${date.getMonth()+1}-${i}`;
+        dayDiv.id = `${date.getFullYear()}-${date.getMonth() + 1}-${i}`;
         dayDiv.textContent = i;
-        appendReservations(dayDiv);
-        if(months[i] == "Sunday" || months[i] == "Saturday"){
+        const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
+            dayDiv.style.opacity = "0.5";
         }
+
+        appendReservations(dayDiv);
         Containerdays.append(dayDiv);
     }
 }
@@ -100,9 +107,11 @@ function appendReservations(dayDiv) {
     const nbPersone = document.getElementById("nb-personneModifSuppr");
     const type = document.getElementById("typeModifSuppr");
     const date = document.getElementById("dateModifSuppr");
+
     reservationsJour.forEach(res => {
         let p = document.createElement("div");
         p.textContent = res.titre;
+
         p.addEventListener('click', function() {
             cardModifierSupprimer.classList.add("formModifSupprToggle");
             cover.classList.add("formAjoutToggle");
@@ -115,45 +124,43 @@ function appendReservations(dayDiv) {
             type.value = res.type;
 
             const dataTransfer = new Date(dayDiv.id);
-            date.value = `${dataTransfer.getFullYear()}-${String(dataTransfer.getMonth()+1).padStart(2, '0')}-${String(dataTransfer.getDate()).padStart(2, '0')}`;
-
+            date.value = `${dataTransfer.getFullYear()}-${String(dataTransfer.getMonth() + 1).padStart(2, '0')}-${String(dataTransfer.getDate()).padStart(2, '0')}`;
 
             const newBtnModifier = document.getElementById("btnModifier");
             const newBtnSupprimer = document.getElementById("btnSupprimer");
 
-            //  modifier reservation
-            newBtnModifier.addEventListener('click', function(){
-                const titreNouvelle = titre.value;
-                const descNouvelle = description.value;
-                const hDebutNouvelle = heureDebut.value;
-                const hFinNouvelle = heureFin.value;
-                const nbPersNouvelle = nbPersone.value;
-                const typeNouvelle = type.value;
-
-                const dateModif = new Date(date.value);
-                const newDateId = `${dateModif.getFullYear()}-${dateModif.getMonth()+1}-${dateModif.getDate()}`;
-
-                const nouvelleReservation = new Reservation(res.id,newDateId, titreNouvelle, descNouvelle, hDebutNouvelle, hFinNouvelle, nbPersNouvelle, typeNouvelle);
+            // Modifier réservation
+            newBtnModifier.onclick = function() {
+                const nouvelleReservation = new Reservation(
+                    res.id,
+                    date.value,
+                    titre.value,
+                    description.value,
+                    heureDebut.value,
+                    heureFin.value,
+                    nbPersone.value,
+                    type.value
+                );
                 updateReservation(res.id, nouvelleReservation);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
-            });
+            };
 
-            //  Supprimer Reservation
-            newBtnSupprimer.addEventListener('click', function(){
+            // Supprimer réservation
+            newBtnSupprimer.onclick = function() {
                 supprimerReservation(res.id);
                 Gourmet();
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
-            });
+            };
         });
 
-        if(res.type === 'VIP'){
+        if (res.type === 'VIP') {
             p.style.backgroundColor = "red";
-        } else if(res.type === 'Standard'){
+        } else if (res.type === 'Standard') {
             p.style.backgroundColor = "green";
         } else {
             p.style.backgroundColor = "blue";
@@ -170,29 +177,29 @@ function updateDate(nb){
 }
 
 // navigation mois
-nextbtn.addEventListener('click' ,() => updateDate(1));
-prevbtn.addEventListener('click' ,() => updateDate(-1));
-
+nextbtn.addEventListener('click', () => updateDate(1));
+prevbtn.addEventListener('click', () => updateDate(-1));
 
 function aficherCard(){
     const divCalendrier = document.querySelectorAll(".days div");
     const cover = document.getElementById("cover");
 
     // Fermer le formulaire quand on clique sur le cover
-    cover.addEventListener('click' , function(){
+    cover.addEventListener('click', function() {
         this.classList.remove("formAjoutToggle");
         cardAjout.classList.remove("formAjoutToggle");
         cardModifierSupprimer.classList.remove("formModifSupprToggle");
     });
 
-    // Quand on clique sur un jour il ouvrir formulaire
+    // Ouvrir formulaire ajout si pas désactivé
     divCalendrier.forEach(div => {
-        div.addEventListener('click', function(){
+        div.addEventListener('click', function() {
+            if (div.classList.contains("disable-div")) return;
+
             cover.classList.add("formAjoutToggle");
             cardAjout.classList.add("formAjoutToggle");
             let TransferDate = new Date(div.id);
-            InputDate.value = `${TransferDate.getFullYear()}-${String(TransferDate.getMonth()+1).padStart(2, '0')}-${String(TransferDate.getDate()).padStart(2, '0')}`;
-
+            InputDate.value = `${TransferDate.getFullYear()}-${String(TransferDate.getMonth() + 1).padStart(2, '0')}-${String(TransferDate.getDate()).padStart(2, '0')}`;
         });
     });
 }
@@ -208,11 +215,8 @@ cardAjout.addEventListener('submit', function(event){
     const nbPersone = document.getElementById("nb-personne").value;
     const type = document.getElementById("type").value;
     const date = document.getElementById("date").value;
-    let dateGenerate = new Date(date);
-    let StringDateId = `${dateGenerate.getFullYear()}-${dateGenerate.getMonth()+1}-${dateGenerate.getDate()}`;
-    
 
-    const nouvelleReservation = new Reservation(Date.now(),StringDateId, titre, description, heureBedut, heureFin, nbPersone, type);
+    const nouvelleReservation = new Reservation(Date.now(), date, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
 
     Gourmet();
