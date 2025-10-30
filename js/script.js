@@ -170,7 +170,6 @@ function appendReservations(dayDiv) {
         let cardBody = document.createElement("div");
         cardBody.className = "card-body p-1";
 
-        // Titre
         let cardTitle = document.createElement("h6");
         cardTitle.className = "card-title mb-0";
         cardTitle.textContent = res.titre;
