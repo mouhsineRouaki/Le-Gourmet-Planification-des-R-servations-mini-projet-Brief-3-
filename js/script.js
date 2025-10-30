@@ -47,14 +47,13 @@ function updateReservation(idReservation, nouvelleReservation) {
         }
     }
 }
-function reservationBytitre(titre){
-    let nouvelleList = [];
-    for (let i = 0; i < restauration.length; i++) {
-        if (restauration[i].titre == titre) {
-            nouvelleList.push(restauration[i]);
-        }
-    }
-    restauration = nouvelleList;
+function reservationByTitre(titre) {
+    titre = titre.trim().toLowerCase();
+    return restauration.filter(r => r.titre.trim().toLowerCase().includes(titre));
+}
+function reservationByType(type){
+    type = type.trim().toLowerCase();
+    return restauration.filter(r => r.type.trim().toLowerCase()=== type);
 }
 
 function supprimerReservation(idReservation){
@@ -282,19 +281,16 @@ cardAjout.addEventListener('submit', function(event){
 });
 rechercheInput.addEventListener("input" ,()=>{
     let titreRecherche = rechercheInput.value;
-    console.log(restauration);
-    if(titreRecherche.length > 0 ){
-        reservationBytitre(titreRecherche);
-        Gourmet();
-        aficherCard();
-        console.log(restauration);
-        console.log(titreRecherche);
-        
-    }else{
-        restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []
-        Gourmet();
-        aficherCard();
+    let listeFiltre;
+
+    if (titreRecherche.length > 0) {
+        listeFiltre = reservationByTitre(titreRecherche);
+    } else {
+        listeFiltre = JSON.parse(localStorage.getItem("baseDonnes")) || [];
     }
+    restauration = listeFiltre;
+    Gourmet();
+    aficherCard();
     
 });
 
