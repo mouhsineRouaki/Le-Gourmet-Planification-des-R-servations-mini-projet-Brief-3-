@@ -48,7 +48,7 @@ function updateReservation(idReservation, nouvelleReservation) {
     }
 }
 function reservationBytitre(titre){
-    restauration=restauration.filter(res => res.titre === titre);
+    restauration = restauration.filter(res => res.titre === titre);
 }
 
 function supprimerReservation(idReservation){
@@ -276,9 +276,19 @@ cardAjout.addEventListener('submit', function(event){
 });
 rechercheInput.addEventListener("input" ,()=>{
     let titreRecherche = rechercheInput.value;
-    reservationBytitre(titreRecherche);
-    Gourmet();
-    aficherCard();
+    if(titreRecherche.length > 0 ){
+        reservationBytitre(titreRecherche);
+        Gourmet();
+        aficherCard();
+        console.log(restauration);
+        console.log(titreRecherche);
+        
+    }else{
+        restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []
+        Gourmet();
+        aficherCard();
+    }
+    
 });
 
 updateMonthYear();
