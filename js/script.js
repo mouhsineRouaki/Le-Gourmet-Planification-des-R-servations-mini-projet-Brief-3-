@@ -22,7 +22,7 @@ const btnModifier = document.getElementById("btnModifier");
 const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
-const filterSelect =  document.getElementById("rechercheReservation");
+const filterSelect =  document.getElementById("selectReservation");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
