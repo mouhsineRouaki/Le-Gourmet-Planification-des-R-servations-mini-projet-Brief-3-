@@ -16,19 +16,21 @@
           <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
           <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
         </div>
+
         <button class="btn btn-outline-light fw-bold px-4" id="btnToday">
           <i class="bi bi-calendar-check me-1"></i> Today
         </button>
+
         <div class="d-flex align-items-center gap-3">
           <div class="input-group">
-            <span class="input-group-text bg-white"><i class="bi bi-search text-primary"></i></span>
-            <input type="text" class="form-control" placeholder="Rechercher...">
+            <span class="input-group-text bg-white " ><i class="bi bi-search text-primary"></i></span>
+            <input type="text" class="form-control" id="rechercheReservation" placeholder="Rechercher...">
           </div>
-          <select class="form-select" style="width: 140px;">
-            <option value="">Tous</option>
-            <option value="groupe">Groupe</option>
-            <option value="vip">VIP</option>
-            <option value="standard">Standard</option>
+          <select class="form-select" id="selectReservation" style="width: 140px;">
+            <option value="tous">Tous</option>
+            <option value="groupe" style="background-color: blue;">Groupe</option>
+            <option value="vip" style="background-color: red;">VIP</option>
+            <option value="standard" style="background-color: green;">Standard</option>
           </select>
         </div>
       </div>
