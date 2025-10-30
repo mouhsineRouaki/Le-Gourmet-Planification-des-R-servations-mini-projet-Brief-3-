@@ -24,11 +24,11 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
-let restauration = JSON.parse(localStorage.getItem("reservationsA")) || []; 
+let restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []; 
 
 function addReservation(reservation) {
     restauration.push(reservation);
-    localStorage.setItem("reservationsA", JSON.stringify(restauration));
+    localStorage.setItem("baseDonnes", JSON.stringify(restauration));
 }
 
 function getReservationById(idReservation){
@@ -39,7 +39,7 @@ function updateReservation(idReservation, nouvelleReservation) {
     for (let i = 0; i < restauration.length; i++) {
         if (restauration[i].id === idReservation) {
             restauration[i] = nouvelleReservation;
-            localStorage.setItem("reservationsA", JSON.stringify(restauration));
+            localStorage.setItem("baseDonnes", JSON.stringify(restauration));
             break;
         }
     }
@@ -47,7 +47,7 @@ function updateReservation(idReservation, nouvelleReservation) {
 
 function supprimerReservation(idReservation){
     restauration = restauration.filter(r => r.id !== idReservation);
-    localStorage.setItem("reservationsA", JSON.stringify(restauration));
+    localStorage.setItem("baseDonnes", JSON.stringify(restauration));
 }
 
 function updateMonthYear(){
@@ -75,8 +75,25 @@ function Gourmet(){
         const dayOfWeek = new Date(date.getFullYear(), date.getMonth() - 1, derniereMonthDay - i + 1).getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
-            dayDiv.style.opacity = "0.5";
         }
+        dayDiv.addEventListener('dragover' , (event)=>{
+            event.preventDefault();
+        })
+        dayDiv.addEventListener('drop' , (event)=>{
+            event.preventDefault();
+            if(dayDiv.classList.contains("disable-div")){
+                return ;
+            }
+            const reservationId = event.dataTransfer.getData("reservationId");
+            const reservation = restauration.find(r => r.id == reservationId)
+            if(!reservation) return;
+            const newDate = new Date(dayDiv.id);
+            reservation.date = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${derniereMonthDay - i + 1}`;
+            localStorage.setItem("baseDonnes", JSON.stringify(restauration));
+            Gourmet();
+            aficherCard();
+
+        })
 
         appendReservations(dayDiv);
         Containerdays.append(dayDiv);
@@ -90,8 +107,25 @@ function Gourmet(){
         const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
-            dayDiv.style.opacity = "0.5";
         }
+        dayDiv.addEventListener('dragover' , (event)=>{
+            event.preventDefault();
+        })
+        dayDiv.addEventListener('drop' , (event)=>{
+            event.preventDefault();
+            if(dayDiv.classList.contains("disable-div")){
+                return ;
+            }
+            const reservationId = event.dataTransfer.getData("reservationId");
+            const reservation = restauration.find(r => r.id == reservationId)
+            if(!reservation) return;
+            const newDate = new Date(dayDiv.id);
+            reservation.date = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${i}`;
+            localStorage.setItem("baseDonnes", JSON.stringify(restauration));
+            Gourmet();
+            aficherCard();
+        });
+
 
         appendReservations(dayDiv);
         Containerdays.append(dayDiv);
@@ -111,6 +145,10 @@ function appendReservations(dayDiv) {
     reservationsJour.forEach(res => {
         let p = document.createElement("div");
         p.textContent = res.titre;
+        p.draggable = true;
+        p.addEventListener('dragstart' , (e)=>{
+            e.dataTransfer.setData("reservationId",res.id);
+        })
 
         p.addEventListener('click', function() {
             cardModifierSupprimer.classList.add("formModifSupprToggle");
