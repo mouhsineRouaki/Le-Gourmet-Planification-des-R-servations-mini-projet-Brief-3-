@@ -28,6 +28,7 @@ const date = new Date();
 
 
 let restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []; 
+console.log(restauration)
 
 function addReservation(reservation) {
     restauration.push(reservation);
@@ -297,22 +298,29 @@ rechercheInput.addEventListener("input" ,()=>{
 let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
 
 filterSelect.addEventListener('change', () => {
+    let value = filterSelect.value.trim().toLowerCase(); // normaliser
     let listeFiltre;
-    switch(filterSelect.value){
-        case "Tous":
-            listeFiltre = baseDonnees;
+
+    switch(value){
+        case "tous":
+            listeFiltre = [...baseDonnees];
             break;
-        case "Groupe":
+        case "groupe":
             listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "groupe");
             break;
-        case "VIP":
+        case "vip":
             listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "vip");
             break;
-        case "Standard":
+        case "standard":
             listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "standard");
             break;
+        default:
+            listeFiltre =baseDonnees;
     }
+
+    console.log(listeFiltre);
     restauration = listeFiltre;
+
     Gourmet();
     aficherCard();
 });
