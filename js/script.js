@@ -22,6 +22,7 @@ const btnModifier = document.getElementById("btnModifier");
 const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const daysJourne = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const date = new Date();
 
 
@@ -83,6 +84,9 @@ function Gourmet(){
         dayDiv.id = `${date.getFullYear()}-${date.getMonth()+1}-${i}`;
         dayDiv.textContent = i;
         appendReservations(dayDiv);
+        if(months[i] == "Sunday" || months[i] == "Saturday"){
+            dayDiv.classList.add("disable-div");
+        }
         Containerdays.append(dayDiv);
     }
 }
@@ -97,7 +101,7 @@ function appendReservations(dayDiv) {
     const type = document.getElementById("typeModifSuppr");
     const date = document.getElementById("dateModifSuppr");
     reservationsJour.forEach(res => {
-        let p = document.createElement("p");
+        let p = document.createElement("div");
         p.textContent = res.titre;
         p.addEventListener('click', function() {
             cardModifierSupprimer.classList.add("formModifSupprToggle");
