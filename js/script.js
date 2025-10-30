@@ -177,8 +177,6 @@ function appendReservations(dayDiv) {
         let cardText = document.createElement("p");
         cardText.className = "card-text mb-0 small";
         cardText.textContent = `${res.heureBedut} - ${res.heureFin} | ${res.nbPersone} personne(s)`;
-
-        // Ajouter titre et texte au body
         cardBody.append(cardTitle);
         cardBody.append(cardText);
         card.append(cardBody);
