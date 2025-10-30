@@ -8,12 +8,29 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-light">
-  <header class="mb-5 shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed">
-      <div class="container justify-content-between align-items-center">
-        <span class="text-white fs-2 fw-bold prev-btn" role="button">&lt;</span>
-        <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
-        <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
+    <header class="mb-5 shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+      <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <span class="text-white fs-2 fw-bold prev-btn" role="button">&lt;</span>
+          <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
+          <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
+        </div>
+        <button class="btn btn-outline-light fw-bold px-4" id="btnToday">
+          <i class="bi bi-calendar-check me-1"></i> Today
+        </button>
+        <div class="d-flex align-items-center gap-3">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search text-primary"></i></span>
+            <input type="text" class="form-control" placeholder="Rechercher...">
+          </div>
+          <select class="form-select" style="width: 140px;">
+            <option value="">Tous</option>
+            <option value="groupe">Groupe</option>
+            <option value="vip">VIP</option>
+            <option value="standard">Standard</option>
+          </select>
+        </div>
       </div>
     </nav>
   </header>
