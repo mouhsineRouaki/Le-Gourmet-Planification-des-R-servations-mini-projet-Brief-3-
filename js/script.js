@@ -169,9 +169,11 @@ function appendReservations(dayDiv) {
 
             // Modifier réservation
             newBtnModifier.onclick = function() {
+                let newDate = new Date(date.value)
+                let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
                 const nouvelleReservation = new Reservation(
                     res.id,
-                    date.value,
+                    valeurDate,
                     titre.value,
                     description.value,
                     heureDebut.value,
@@ -253,8 +255,10 @@ cardAjout.addEventListener('submit', function(event){
     const nbPersone = document.getElementById("nb-personne").value;
     const type = document.getElementById("type").value;
     const date = document.getElementById("date").value;
+    let newDate = new Date(date)
+    let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
 
-    const nouvelleReservation = new Reservation(Date.now(), date, titre, description, heureBedut, heureFin, nbPersone, type);
+    const nouvelleReservation = new Reservation(Date.now(), valeurDate, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
 
     Gourmet();
