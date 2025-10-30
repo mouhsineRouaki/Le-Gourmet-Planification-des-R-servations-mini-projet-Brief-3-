@@ -168,7 +168,7 @@ function appendReservations(dayDiv) {
         }
 
         let cardBody = document.createElement("div");
-        cardBody.className = "card-body p-1"; // padding réduit
+        cardBody.className = "card-body p-1";
 
         // Titre
         let cardTitle = document.createElement("h6");
