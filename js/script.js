@@ -24,6 +24,7 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
 const btnToday =  document.getElementById("btnToday");
+const btnAfficher =  document.getElementById("btnAfficher");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
