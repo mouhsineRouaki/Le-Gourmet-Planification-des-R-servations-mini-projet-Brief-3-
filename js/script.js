@@ -330,7 +330,10 @@ cardAjout.addEventListener('submit', function(event){
         validation(dateInput),"" , "ce champs est obligatoire";
         return;
     }
-    
+    if(heureBedut.localeCompare(heureFin)){
+        window.alert("date fin doit etre plus de date de debut ")
+        return;
+    }
 
     const nouvelleReservation = new Reservation(Date.now(), valeurDate, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
