@@ -62,6 +62,9 @@ body {
     cursor: not-allowed;
     opacity: 0.5;
 }
+.dates{
+    gap: 5px;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
