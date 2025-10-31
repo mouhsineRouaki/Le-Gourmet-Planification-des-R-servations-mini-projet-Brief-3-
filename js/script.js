@@ -81,6 +81,7 @@ function clearCalendrier(){
     Containerdays.innerHTML = "";
 }
 
+//function de generation du calendrier
 function Gourmet(){
     clearCalendrier();
     date.setDate(1);
@@ -129,14 +130,20 @@ function Gourmet(){
         dayDiv.id = `${date.getFullYear()}-${date.getMonth() + 1}-${i}`;
         dayDiv.textContent = i;
         dayDiv.classList.add("col");
+
+
+        //desactiver les weekend
         const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
         }
+        //lejour actuelle
         let currentDate = new Date();
         if(dayDiv.id === `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${parseInt(currentDate.getDate())}`){
             dayDiv.style.border = "2px solid red";
         }
+
+        //drag and drop dune reservation vers un autre jour
         dayDiv.addEventListener('dragover' , (event)=>{
             event.preventDefault();
         })
@@ -161,6 +168,7 @@ function Gourmet(){
     }
 }
 
+//Afficher toutes les reservations dun jour
 function appendReservations(dayDiv) {
     let reservationsJour = getReservationById(dayDiv.id);
     reservationsJour.sort((a, b) =>a.heureBedut.localeCompare(b.heureBedut));
