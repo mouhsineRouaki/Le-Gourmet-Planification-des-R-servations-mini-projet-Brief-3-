@@ -23,6 +23,7 @@ const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
+const btnToday =  document.getElementById("btnToday");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -120,6 +121,10 @@ function Gourmet(){
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
         }
+        let currentDate = new Date();
+        if(dayDiv.id === `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}` ){
+            dayDiv.style.border = "2px solid red";
+        }
         dayDiv.addEventListener('dragover' , (event)=>{
             event.preventDefault();
         })
@@ -156,14 +161,14 @@ function appendReservations(dayDiv) {
 
     reservationsJour.forEach(res => {
         let card = document.createElement("div");
-        card.className = "card mb-1";  // Bootstrap card avec marge
+        card.className = "card mb-1 text-start";  // Bootstrap card avec marge
         card.style.cursor = "pointer";
         if (res.type === 'VIP') {
-            card.style.backgroundColor = "rgba(255,0,0,0.2)";
+            card.style.backgroundColor = "red";
         } else if (res.type === 'Standard') {
-            card.style.backgroundColor = "rgba(0,255,0,0.2)";
+            card.style.backgroundColor = "green";
         } else {
-            card.style.backgroundColor = "rgba(0,0,255,0.2)";
+            card.style.backgroundColor = "blue";
         }
 
         let cardBody = document.createElement("div");
@@ -317,12 +322,12 @@ rechercheInput.addEventListener("input" ,()=>{
 let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
 
 filterSelect.addEventListener('change', () => {
-    let value = filterSelect.value.trim().toLowerCase(); // normaliser
+    let value = filterSelect.value.trim().toLowerCase();
     let listeFiltre;
 
     switch(value){
         case "tous":
-            listeFiltre = [...baseDonnees];
+            listeFiltre = baseDonnees;
             break;
         case "groupe":
             listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "groupe");
@@ -343,6 +348,18 @@ filterSelect.addEventListener('change', () => {
     Gourmet();
     aficherCard();
 });
+btnToday.addEventListener("click" , ()=>{
+    let dateNow = new Date();
+    date.setDate(dateNow.getDate())
+    date.setFullYear(dateNow.getFullYear())
+    date.setMonth(dateNow.getMonth())
+    updateDate(0);
+    Gourmet();
+    aficherCard();
+});
+function validation(){
+
+}
 
 updateMonthYear();
 Gourmet();
