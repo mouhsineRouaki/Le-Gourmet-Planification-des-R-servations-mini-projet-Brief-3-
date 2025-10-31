@@ -84,6 +84,7 @@ function Gourmet(){
         const dayDiv = document.createElement("div");
         dayDiv.id = `${date.getFullYear()}-${date.getMonth()}-${derniereMonthDay - i + 1}`;
         dayDiv.textContent = derniereMonthDay - i + 1;
+        dayDiv.classList.add("col");
 
         const dayOfWeek = new Date(date.getFullYear(), date.getMonth() - 1, derniereMonthDay - i + 1).getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) {
@@ -117,6 +118,7 @@ function Gourmet(){
         const dayDiv = document.createElement("div");
         dayDiv.id = `${date.getFullYear()}-${date.getMonth() + 1}-${i}`;
         dayDiv.textContent = i;
+        dayDiv.classList.add("col");
         const dayOfWeek = new Date(date.getFullYear(), date.getMonth(), i).getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
