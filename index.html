@@ -9,33 +9,40 @@
 </head>
 <body class="bg-light">
     <header class="mb-5 shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-      <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div class="d-flex align-items-center gap-3">
-          <span class="text-white fs-2 fw-bold prev-btn" role="button">&lt;</span>
-          <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
-          <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container-fluid flex-lg-row flex-column gap-3">
 
-        <button class="btn btn-outline-light fw-bold px-4" id="btnToday">
+      <div class="d-flex align-items-center justify-content-center gap-3 order-1 order-lg-1 w-100 w-lg-auto">
+        <span class="text-white fs-2 fw-bold prev-btn" role="button">&lt;</span>
+        <h3 class="text-white fw-bold text-center m-0 month">Janvier 2005</h3>
+        <span class="text-white fs-2 fw-bold next-btn" role="button">&gt;</span>
+      </div>
+
+      <div class="d-flex justify-content-center order-3 order-lg-2 w-100 w-lg-auto">
+        <button class="btn btn-outline-light fw-bold px-4 w-10 w-lg-auto" id="btnToday">
           <i class="bi bi-calendar-check me-1"></i> Today
         </button>
-
-        <div class="d-flex align-items-center gap-3">
-          <div class="input-group">
-            <span class="input-group-text bg-white " ><i class="bi bi-search text-primary"></i></span>
-            <input type="text" class="form-control" id="rechercheReservation" placeholder="Rechercher...">
-          </div>
-          <select class="form-select" id="selectReservation" style="width: 140px;">
-            <option value="tous">Tous</option>
-            <option value="groupe" style="background-color: blue;">Groupe</option>
-            <option value="vip" style="background-color: red;">VIP</option>
-            <option value="standard" style="background-color: green;">Standard</option>
-          </select>
-        </div>
       </div>
-    </nav>
-  </header>
+
+      <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center gap-2 order-2 order-lg-3 w-100 w-lg-auto">
+        <div class="input-group w-100 w-lg-auto">
+          <span class="input-group-text bg-white">
+            <i class="bi bi-search text-primary"></i>
+          </span>
+          <input type="text" class="form-control" id="rechercheReservation" placeholder="Rechercher...">
+        </div>
+
+        <select class="form-select w-100 w-lg-auto" id="selectReservation">
+          <option value="tous">Tous</option>
+          <option value="groupe" style="background-color: blue;">Groupe</option>
+          <option value="vip" style="background-color: red;">VIP</option>
+          <option value="standard" style="background-color: green;">Standard</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+</header>
+
   <main class="container">
     <div class="row text-center fw-semibold mb-3 text-secondary weekdays">
       <div class="col">Dim</div>
