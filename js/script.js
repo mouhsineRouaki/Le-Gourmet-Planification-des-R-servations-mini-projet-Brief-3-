@@ -225,6 +225,7 @@ function appendReservations(dayDiv) {
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
+                cardAjout.classList.remove("formAjoutToggle");
             }
         });
 
