@@ -12,6 +12,7 @@ class Reservation {
     }
 }
 
+// recuperation des element en dom
 const Containerdays = document.querySelector(".days");
 const nextbtn = document.querySelector(".next-btn");
 const prevbtn = document.querySelector(".prev-btn");
@@ -27,22 +28,24 @@ const filterSelect =  document.getElementById("selectReservation");
 const btnToday =  document.getElementById("btnToday");
 const btnCloseAjout =  document.getElementById("closeFormAjout");
 const btnCloseAjoutModif =  document.getElementById("closeFormModifSuppr");
-
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
-
+//recuperation les element en local storage
 let restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []; 
 console.log(restauration)
+
 
 function addReservation(reservation) {
     restauration.push(reservation);
     localStorage.setItem("baseDonnes", JSON.stringify(restauration));
 }
 
+
 function getReservationById(idReservation){
     return restauration.filter(res => res.date === idReservation);
 }
+
 
 function updateReservation(idReservation, nouvelleReservation) {
     for (let i = 0; i < restauration.length; i++) {
@@ -53,10 +56,13 @@ function updateReservation(idReservation, nouvelleReservation) {
         }
     }
 }
+
 function reservationByTitre(titre) {
     titre = titre.trim().toLowerCase();
     return restauration.filter(r => r.titre.trim().toLowerCase().includes(titre));
 }
+
+
 function reservationByType(type){
     type = type.trim().toLowerCase();
     return  restauration.filter(r => r.type.trim().toLowerCase()=== type);
