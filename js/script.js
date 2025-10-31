@@ -24,6 +24,7 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
 const btnToday =  document.getElementById("btnToday");
+const btnAfficher =  document.getElementById("btnAfficher");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -159,6 +160,7 @@ function appendReservations(dayDiv) {
     const type = document.getElementById("typeModifSuppr");
     const date = document.getElementById("dateModifSuppr");
 
+
     reservationsJour.forEach(res => {
         let card = document.createElement("div");
         card.className = "card mb-1 text-start"; 
@@ -209,7 +211,17 @@ function appendReservations(dayDiv) {
 
             newBtnModifier.onclick = function(event) {
                 event.preventDefault();
-                let newDate = new Date(date.value)
+                if(titre.value ==="" || description.value === "" || heureDebut.value === "" || heureFin.value === ""|| nbPersone.value === "" || type.value ===""){
+                    validation(titre,"titre de reservation" , "ce champs est obligatoire");
+                    validation(description,"description de reservation" , "ce champs est obligatoire");
+                    validation(heureDebut,"" , "ce champs est obligatoire");
+                    validation(heureFin,"" , "ce champs est obligatoire");
+                    validation(nbPersone,"nombre persone de reservation" , "ce champs est obligatoire");
+                    validation(type),"type de reservation" , "ce champs est obligatoire";
+                    validation(date),"" , "ce champs est obligatoire";
+                    return;
+                }
+                            let newDate = new Date(date.value)
                 let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
                     res.id, valeurDate, titre.value, description.value,
@@ -278,19 +290,37 @@ function aficherCard(){
 // submit form ajout 
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
+    const titreInput = document.getElementById("titre");
+    const descriptionInput =document.getElementById("description");
+    const heureBedutInput = document.getElementById("heure-debut");
+    const heureFinInput = document.getElementById("heure-fin");
+    const nbPersoneInput = document.getElementById("nb-personne");
+    const typeInput = document.getElementById("type");
+    const dateInput = document.getElementById("date");
 
-    const titre = document.getElementById("titre").value;
-    const description = document.getElementById("description").value;
-    const heureBedut = document.getElementById("heure-debut").value;
-    const heureFin = document.getElementById("heure-fin").value;
-    const nbPersone = document.getElementById("nb-personne").value;
-    const type = document.getElementById("type").value;
-    const date = document.getElementById("date").value;
-    if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
-        
-    }
+    const titre = titreInput.value;
+    const description = descriptionInput.value;
+    const heureBedut = heureBedutInput.value;
+    const heureFin = heureFinInput.value;
+    const nbPersone = nbPersoneInput.value;
+    const type = typeInput.value;
+    const date = dateInput.value;
     let newDate = new Date(date)
     let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
+
+
+
+
+    if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
+        validation(titreInput,"titre de reservation" , "ce champs est obligatoire");
+        validation(descriptionInput,"description de reservation" , "ce champs est obligatoire");
+        validation(heureBedutInput,"" , "ce champs est obligatoire");
+        validation(heureFinInput,"" , "ce champs est obligatoire");
+        validation(nbPersoneInput,"nombre persone de reservation" , "ce champs est obligatoire");
+        validation(typeInput),"type de reservation" , "ce champs est obligatoire";
+        validation(dateInput),"" , "ce champs est obligatoire";
+        return;
+    }
 
     const nouvelleReservation = new Reservation(Date.now(), valeurDate, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
@@ -360,8 +390,23 @@ btnToday.addEventListener("click" , ()=>{
     Gourmet();
     aficherCard();
 });
-function validation(){
-
+function validation(input,textPlaceHolder,textError){
+    if(input.value === ""){
+        input.style.border = "2px solid red"
+        input.style.color = "red"
+        input.setAttribute("placeholder",textError)
+    }else{
+        input.style.border = "2px solid green"
+        input.style.color = "green"
+        input.setAttribute("placeholder",textPlaceHolder)
+    }
+    input.addEventListener('input' , ()=>{
+            let value = input.value;
+            if(value.length > 0 ){
+                input.style.border = "2px solid green"
+                input.style.color = "green"
+            }
+    });
 }
 
 updateMonthYear();
