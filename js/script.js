@@ -278,17 +278,29 @@ function aficherCard(){
 // submit form ajout 
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
+    const titreInput = document.getElementById("titre");
+    const descriptionInput =document.getElementById("description");
+    const heureBedutInput = document.getElementById("heure-debut");
+    const heureFinInput = document.getElementById("heure-fin");
+    const nbPersoneInput = document.getElementById("nb-personne");
+    const typeInput = document.getElementById("type");
+    const dateInput = document.getElementById("date");
 
-    const titre = document.getElementById("titre").value;
-    const description = document.getElementById("description").value;
-    const heureBedut = document.getElementById("heure-debut").value;
-    const heureFin = document.getElementById("heure-fin").value;
-    const nbPersone = document.getElementById("nb-personne").value;
-    const type = document.getElementById("type").value;
-    const date = document.getElementById("date").value;
+    const titre = titreInput.value;
+    const description = descriptionInput.value;
+    const heureBedut = heureBedutInput.value;
+    const heureFin = heureFinInput.value;
+    const nbPersone = nbPersoneInput.value;
+    const type = typeInput.value;
+    const date = dateInput.value;
     let newDate = new Date(date)
     let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
+
+
+
+
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
+        
         return;
     }
 
@@ -360,7 +372,16 @@ btnToday.addEventListener("click" , ()=>{
     Gourmet();
     aficherCard();
 });
-function validation(){
+function validation(input,textPlaceHolder,textError){
+    if(input.value === ""){
+        input.style.border = "2px solid red"
+        input.style.color = "red"
+        input.setAttribute("placeholder",textError)
+    }else{
+        input.style.border = ""
+        input.style.color = ""
+        input.setAttribute("placeholder",textPlaceHolder)
+    }
 
 }
 
