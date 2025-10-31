@@ -176,15 +176,15 @@ function appendReservations(dayDiv) {
         }
 
         let cardBody = document.createElement("div");
-        cardBody.className = "card-body d-flex p-1";
+        cardBody.className = "card-body p-1";
 
         let cardTitle = document.createElement("h6");
-        cardTitle.className = "card-title mb-0";
+        cardTitle.className = "card-title fw-bold mb-0";
         cardTitle.textContent = res.titre;
 
         let cardText = document.createElement("p");
         cardText.className = "card-text mb-0 small";
-        cardText.textContent = ` |${res.heureBedut} - ${res.heureFin} \n personne(${res.nbPersone})`;
+        cardText.textContent = `${res.heureBedut} - ${res.heureFin} \n personne(${res.nbPersone})`;
         cardBody.append(cardTitle);
         cardBody.append(cardText);
         card.append(cardBody);
