@@ -286,11 +286,11 @@ cardAjout.addEventListener('submit', function(event){
     const nbPersone = document.getElementById("nb-personne").value;
     const type = document.getElementById("type").value;
     const date = document.getElementById("date").value;
+    let newDate = new Date(date)
+    let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
         
     }
-    let newDate = new Date(date)
-    let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
 
     const nouvelleReservation = new Reservation(Date.now(), valeurDate, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
