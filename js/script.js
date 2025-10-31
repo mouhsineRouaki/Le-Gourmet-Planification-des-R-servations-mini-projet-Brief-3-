@@ -39,6 +39,7 @@ console.log(restauration)
 function addReservation(reservation) {
     restauration.push(reservation);
     localStorage.setItem("baseDonnes", JSON.stringify(restauration));
+    restauration = JSON.parse(localStorage.getItem("baseDonnes")) || []; 
 }
 
 
@@ -406,7 +407,7 @@ rechercheInput.addEventListener("input" ,()=>{
 
 
 //fonctionalite filltrage 
-let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
+let baseDonnees = restauration;
 
 filterSelect.addEventListener('change', () => {
     let value = filterSelect.value.trim().toLowerCase();
