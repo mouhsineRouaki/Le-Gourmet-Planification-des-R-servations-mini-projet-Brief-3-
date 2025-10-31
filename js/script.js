@@ -122,8 +122,7 @@ function Gourmet(){
             dayDiv.classList.add("disable-div");
         }
         let currentDate = new Date();
-        if(dayDiv.id === `${currentDate.getFullYear()}-${currentDate.getMonth()}-${parseInt(currentDate.getDate())}` ){
-            console.log("find ",dayDiv.id,`${currentDate.getFullYear()}-${currentDate.getMonth()}-${parseInt(currentDate.getDate())}`)
+        if(dayDiv.id === `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${parseInt(currentDate.getDate())}`){
             dayDiv.style.border = "2px solid red";
         }
         dayDiv.addEventListener('dragover' , (event)=>{
