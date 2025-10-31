@@ -24,6 +24,9 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
 const btnToday =  document.getElementById("btnToday");
+const btnCloseAjout =  document.getElementById("closeFormAjout");
+const btnCloseAjoutModif =  document.getElementById("closeFormModifSuppr");
+
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -256,7 +259,16 @@ function appendReservations(dayDiv) {
         dayDiv.append(card);
     });
 }
-
+btnCloseAjout.addEventListener('click' , ()=>{
+    cover.classList.remove("formAjoutToggle");
+    cardModifierSupprimer.classList.remove("formModifSupprToggle");
+    cardAjout.classList.remove("formAjoutToggle");
+})
+btnCloseAjoutModif.addEventListener('click' , ()=>{
+    cover.classList.remove("formAjoutToggle");
+    cardModifierSupprimer.classList.remove("formModifSupprToggle");
+    cardAjout.classList.remove("formAjoutToggle");
+})
 
 function updateDate(nb){
     date.setMonth(date.getMonth() + nb);
