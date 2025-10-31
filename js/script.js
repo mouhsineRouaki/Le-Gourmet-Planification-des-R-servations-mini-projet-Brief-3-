@@ -54,8 +54,7 @@ function reservationByTitre(titre) {
 }
 function reservationByType(type){
     type = type.trim().toLowerCase();
-    let list;
-    return list = restauration.filter(r => r.type.trim().toLowerCase()=== type);
+    return  restauration.filter(r => r.type.trim().toLowerCase()=== type);
 }
 
 function supprimerReservation(idReservation){
@@ -216,6 +215,7 @@ function appendReservations(dayDiv) {
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
+                cardAjout.classList.remove("formAjoutToggle");
             }
 
             newBtnSupprimer.onclick = function(event) {
