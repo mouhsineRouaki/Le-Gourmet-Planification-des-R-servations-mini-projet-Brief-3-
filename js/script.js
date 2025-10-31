@@ -300,7 +300,13 @@ cardAjout.addEventListener('submit', function(event){
 
 
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
-        
+        validation(titreInput);
+        validation(descriptionInput);
+        validation(heureBedutInput);
+        validation(heureFinInput);
+        validation(nbPersoneInput);
+        validation(typeInput);
+        validation(dateInput);
         return;
     }
 
