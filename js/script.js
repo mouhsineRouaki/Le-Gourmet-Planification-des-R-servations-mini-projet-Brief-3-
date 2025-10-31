@@ -170,6 +170,7 @@ function Gourmet(){
 
 //Afficher toutes les reservations dun jour
 function appendReservations(dayDiv) {
+    //recuperation et filtrage de reservation
     let reservationsJour = getReservationById(dayDiv.id);
     reservationsJour.sort((a, b) =>a.heureBedut.localeCompare(b.heureBedut));
     const titre = document.getElementById("titreModifSuppr");
@@ -229,8 +230,12 @@ function appendReservations(dayDiv) {
             const newBtnModifier = document.getElementById("btnModifier");
             const newBtnSupprimer = document.getElementById("btnSupprimer");
 
+
+
+            //modification dun reservation
             newBtnModifier.onclick = function(event) {
                 event.preventDefault();
+
                 if(titre.value ==="" || description.value === "" || heureDebut.value === "" || heureFin.value === ""|| nbPersone.value === "" || type.value ===""){
                     validation(titre,"titre de reservation" , "ce champs est obligatoire");
                     validation(description,"description de reservation" , "ce champs est obligatoire");
@@ -241,8 +246,10 @@ function appendReservations(dayDiv) {
                     validation(date,"" , "ce champs est obligatoire");
                     return;
                 }
+                //validation de heure fin va devrer plus de heure de debut 
                 if(heureDebut.value.localeCompare(heureFin.value)  != -1){
                     window.alert("date fin doit etre plus de date de debut ")
+                   
                     return;
                 }
                 let newDate = new Date(date.value)
@@ -274,11 +281,15 @@ function appendReservations(dayDiv) {
         dayDiv.append(card);
     });
 }
+
+//btn close popup dajout
 btnCloseAjout.addEventListener('click' , ()=>{
     cover.classList.remove("formAjoutToggle");
     cardModifierSupprimer.classList.remove("formModifSupprToggle");
     cardAjout.classList.remove("formAjoutToggle");
 })
+
+//btn close popup de modification
 btnCloseAjoutModif.addEventListener('click' , ()=>{
     cover.classList.remove("formAjoutToggle");
     cardModifierSupprimer.classList.remove("formModifSupprToggle");
@@ -311,7 +322,6 @@ function aficherCard(){
     divCalendrier.forEach(div => {
         div.addEventListener('click', function() {
             if (div.classList.contains("disable-div")) return;
-
             cover.classList.add("formAjoutToggle");
             cardAjout.classList.add("formAjoutToggle");
             let TransferDate = new Date(div.id);
@@ -342,9 +352,7 @@ cardAjout.addEventListener('submit', function(event){
     let newDate = new Date(date)
     let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
 
-
-
-
+    //validation de champs si empty
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
         validation(titreInput,"titre de reservation" , "ce champs est obligatoire");
         validation(descriptionInput,"description de reservation" , "ce champs est obligatoire");
@@ -355,6 +363,7 @@ cardAjout.addEventListener('submit', function(event){
         validation(dateInput),"" , "ce champs est obligatoire";
         return;
     }
+    //validation de heure fin et debut
     if(heureBedut.localeCompare(heureFin) != -1){
         window.alert("date fin doit etre plus de date de debut ")
         return;
@@ -370,12 +379,16 @@ cardAjout.addEventListener('submit', function(event){
     cardAjout.classList.remove("formAjoutToggle");
     cardAjout.reset();
 });
+
+//les fonctionalite de recherche ; affecter les value tous a select
 rechercheInput.addEventListener("focus" ,()=>{
     filterSelect.value = "tous" ; 
     restauration = JSON.parse(localStorage.getItem("baseDonnes")) || [];
     Gourmet();
     aficherCard();
 })
+
+//les fonctionalite de recherche
 rechercheInput.addEventListener("input" ,()=>{
     let titreRecherche = rechercheInput.value;
     let listeFiltre;
@@ -390,6 +403,9 @@ rechercheInput.addEventListener("input" ,()=>{
     aficherCard();
     
 });
+
+
+//fonctionalite filltrage 
 let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
 
 filterSelect.addEventListener('change', () => {
@@ -419,6 +435,9 @@ filterSelect.addEventListener('change', () => {
     Gourmet();
     aficherCard();
 });
+
+
+//retour a curent day and month and year
 btnToday.addEventListener("click" , ()=>{
     let dateNow = new Date();
     date.setDate(dateNow.getDate())
@@ -428,6 +447,8 @@ btnToday.addEventListener("click" , ()=>{
     Gourmet();
     aficherCard();
 });
+
+//validation de input 
 function validation(input,textPlaceHolder,textError){
     if(input.value === ""){
         input.style.border = "2px solid red"
@@ -447,6 +468,7 @@ function validation(input,textPlaceHolder,textError){
     });
 }
 
+//inistialisation laffichage 
 updateMonthYear();
 Gourmet();
 aficherCard();
