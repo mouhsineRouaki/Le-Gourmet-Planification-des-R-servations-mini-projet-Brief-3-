@@ -159,6 +159,7 @@ function appendReservations(dayDiv) {
     const type = document.getElementById("typeModifSuppr");
     const date = document.getElementById("dateModifSuppr");
 
+
     reservationsJour.forEach(res => {
         let card = document.createElement("div");
         card.className = "card mb-1 text-start"; 
@@ -209,7 +210,17 @@ function appendReservations(dayDiv) {
 
             newBtnModifier.onclick = function(event) {
                 event.preventDefault();
-                let newDate = new Date(date.value)
+                if(titre.value ==="" || description.value === "" || heureDebut.value === "" || heureFin.value === ""|| nbPersone.value === "" || type.value ===""){
+                    validation(titre,"titre de reservation" , "ce champs est obligatoire");
+                    validation(description,"description de reservation" , "ce champs est obligatoire");
+                    validation(heureDebut,"" , "ce champs est obligatoire");
+                    validation(heureFin,"" , "ce champs est obligatoire");
+                    validation(nbPersone,"nombre persone de reservation" , "ce champs est obligatoire");
+                    validation(type),"type de reservation" , "ce champs est obligatoire";
+                    validation(date),"" , "ce champs est obligatoire";
+                    return;
+                }
+                            let newDate = new Date(date.value)
                 let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
                     res.id, valeurDate, titre.value, description.value,
@@ -300,13 +311,13 @@ cardAjout.addEventListener('submit', function(event){
 
 
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
-        validation(titreInput);
-        validation(descriptionInput);
-        validation(heureBedutInput);
-        validation(heureFinInput);
-        validation(nbPersoneInput);
-        validation(typeInput);
-        validation(dateInput);
+        validation(titreInput,"titre de reservation" , "ce champs est obligatoire");
+        validation(descriptionInput,"description de reservation" , "ce champs est obligatoire");
+        validation(heureBedutInput,"" , "ce champs est obligatoire");
+        validation(heureFinInput,"" , "ce champs est obligatoire");
+        validation(nbPersoneInput,"nombre persone de reservation" , "ce champs est obligatoire");
+        validation(typeInput),"type de reservation" , "ce champs est obligatoire";
+        validation(dateInput),"" , "ce champs est obligatoire";
         return;
     }
 
@@ -384,11 +395,17 @@ function validation(input,textPlaceHolder,textError){
         input.style.color = "red"
         input.setAttribute("placeholder",textError)
     }else{
-        input.style.border = ""
-        input.style.color = ""
+        input.style.border = "2px solid green"
+        input.style.color = "green"
         input.setAttribute("placeholder",textPlaceHolder)
     }
-
+    input.addEventListener('input' , ()=>{
+            let value = input.value;
+            if(value.length > 0 ){
+                input.style.border = "2px solid green"
+                input.style.color = "green"
+            }
+    });
 }
 
 updateMonthYear();
