@@ -61,20 +61,6 @@ body {
     cursor: not-allowed;
     opacity: 0.5;
 }
-.dates{
-    gap: 5px;
-}
-.dates div{
-    border: 1px solid #dee2e6;
-    padding: 8px;
-    text-align: right;
-    position: relative;
-    background-color: #fff;
-    transition: all 0.2s ease;
-}
-
-
-
 
 /* Responsive */
 @media (max-width: 768px) {
