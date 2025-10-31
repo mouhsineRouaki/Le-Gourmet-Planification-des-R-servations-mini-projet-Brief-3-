@@ -221,11 +221,7 @@ function appendReservations(dayDiv) {
                     validation(date,"" , "ce champs est obligatoire");
                     return;
                 }
-                if(heureDebut.value.localeCompare(heureFin.value)){
-                    heureDebut.style.border = "2px solid red"
-                    heureDebut.style.color = "red"
-                    heureFin.style.border = "2px solid red"
-                    heureFin.style.color = "red"
+                if(heureDebut.value.localeCompare(heureFin.value)  != -1){
                     window.alert("date fin doit etre plus de date de debut ")
                     return;
                 }
@@ -330,7 +326,7 @@ cardAjout.addEventListener('submit', function(event){
         validation(dateInput),"" , "ce champs est obligatoire";
         return;
     }
-    if(heureBedut.localeCompare(heureFin)){
+    if(heureBedut.localeCompare(heureFin) != -1){
         window.alert("date fin doit etre plus de date de debut ")
         return;
     }
