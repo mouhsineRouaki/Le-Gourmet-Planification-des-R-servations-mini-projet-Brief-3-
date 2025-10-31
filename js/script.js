@@ -161,7 +161,7 @@ function appendReservations(dayDiv) {
 
     reservationsJour.forEach(res => {
         let card = document.createElement("div");
-        card.className = "card mb-1 text-start";  // Bootstrap card avec marge
+        card.className = "card mb-1 text-start"; 
         card.style.cursor = "pointer";
         if (res.type === 'VIP') {
             card.style.backgroundColor = "red";
@@ -286,6 +286,9 @@ cardAjout.addEventListener('submit', function(event){
     const nbPersone = document.getElementById("nb-personne").value;
     const type = document.getElementById("type").value;
     const date = document.getElementById("date").value;
+    if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
+        
+    }
     let newDate = new Date(date)
     let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
 
