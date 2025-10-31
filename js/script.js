@@ -151,6 +151,7 @@ function Gourmet(){
 
 function appendReservations(dayDiv) {
     let reservationsJour = getReservationById(dayDiv.id);
+    reservationsJour.sort((a, b) =>a.heureBedut.localeCompare(b.heureBedut));
     const titre = document.getElementById("titreModifSuppr");
     const description = document.getElementById("descriptionModifSuppr");
     const heureDebut = document.getElementById("heure-debutModifSuppr");
@@ -173,7 +174,7 @@ function appendReservations(dayDiv) {
         }
 
         let cardBody = document.createElement("div");
-        cardBody.className = "card-body p-1";
+        cardBody.className = "card-body d-flex p-1";
 
         let cardTitle = document.createElement("h6");
         cardTitle.className = "card-title mb-0";
@@ -181,7 +182,7 @@ function appendReservations(dayDiv) {
 
         let cardText = document.createElement("p");
         cardText.className = "card-text mb-0 small";
-        cardText.textContent = `${res.heureBedut} - ${res.heureFin} | ${res.nbPersone} personne(s)`;
+        cardText.textContent = ` |${res.heureBedut} - ${res.heureFin} \n personne(${res.nbPersone})`;
         cardBody.append(cardTitle);
         cardBody.append(cardText);
         card.append(cardBody);
@@ -216,11 +217,19 @@ function appendReservations(dayDiv) {
                     validation(heureDebut,"" , "ce champs est obligatoire");
                     validation(heureFin,"" , "ce champs est obligatoire");
                     validation(nbPersone,"nombre persone de reservation" , "ce champs est obligatoire");
-                    validation(type),"type de reservation" , "ce champs est obligatoire";
-                    validation(date),"" , "ce champs est obligatoire";
+                    validation(type,"type de reservation" , "ce champs est obligatoire");
+                    validation(date,"" , "ce champs est obligatoire");
                     return;
                 }
-                            let newDate = new Date(date.value)
+                if(heureDebut.value.localeCompare(heureFin.value)){
+                    heureDebut.style.border = "2px solid red"
+                    heureDebut.style.color = "red"
+                    heureFin.style.border = "2px solid red"
+                    heureFin.style.color = "red"
+                    window.alert("date fin doit etre plus de date de debut ")
+                    return;
+                }
+                let newDate = new Date(date.value)
                 let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
                     res.id, valeurDate, titre.value, description.value,
@@ -286,6 +295,7 @@ function aficherCard(){
     });
 }
 
+
 // submit form ajout 
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
@@ -318,6 +328,10 @@ cardAjout.addEventListener('submit', function(event){
         validation(nbPersoneInput,"nombre persone de reservation" , "ce champs est obligatoire");
         validation(typeInput),"type de reservation" , "ce champs est obligatoire";
         validation(dateInput),"" , "ce champs est obligatoire";
+        return;
+    }
+    if(heureBedut.localeCompare(heureFin)){
+        window.alert("date fin doit etre plus de date de debut ")
         return;
     }
 
