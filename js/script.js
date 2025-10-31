@@ -351,7 +351,7 @@ cardAjout.addEventListener('submit', function(event){
     const type = typeInput.value;
     const date = dateInput.value;
     let newDate = new Date(date)
-    let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
+    let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`;
 
     //validation de champs si empty
     if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){

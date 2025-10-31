@@ -58,7 +58,6 @@ Ce dépôt contient le code source (HTML/CSS/JS) du mini-projet.
 - index.html — point d'entrée
 - /css — feuilles de style
 - /js — scripts JavaScript
-- /assets — images et ressources
 - README.md — ce fichier
 
 ## Utilisation
@@ -93,6 +92,7 @@ Pensez à :
 
 ## Déploiement
 - Le projet peut être déployé sur GitHub Pages, Vercel ou n'importe quel hébergeur de pages statiques.
+https://le-gourmet-planification-des-r-serv.vercel.app/
 - Exemple GitHub Pages : paramétrez la branche `main` ou `gh-pages` dans les settings du repo.
 
 ## Licence
