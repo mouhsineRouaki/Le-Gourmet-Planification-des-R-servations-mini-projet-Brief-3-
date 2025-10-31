@@ -24,7 +24,6 @@ const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
 const btnToday =  document.getElementById("btnToday");
-const btnAfficher =  document.getElementById("btnAfficher");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -152,6 +151,7 @@ function Gourmet(){
 
 function appendReservations(dayDiv) {
     let reservationsJour = getReservationById(dayDiv.id);
+    reservationsJour.sort((a,b)=>a.heureBedut.split(":")[0] - b.heureBedut.split(":")[0] && a.heureBedut.split(":")[1] - b.heureBedut.split(":")[1] );
     const titre = document.getElementById("titreModifSuppr");
     const description = document.getElementById("descriptionModifSuppr");
     const heureDebut = document.getElementById("heure-debutModifSuppr");
@@ -221,7 +221,7 @@ function appendReservations(dayDiv) {
                     validation(date),"" , "ce champs est obligatoire";
                     return;
                 }
-                            let newDate = new Date(date.value)
+                let newDate = new Date(date.value)
                 let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
                     res.id, valeurDate, titre.value, description.value,
@@ -286,6 +286,7 @@ function aficherCard(){
         });
     });
 }
+
 
 // submit form ajout 
 cardAjout.addEventListener('submit', function(event){
