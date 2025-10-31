@@ -430,7 +430,6 @@ filterSelect.addEventListener('change', () => {
             listeFiltre =baseDonnees;
     }
 
-    console.log(listeFiltre);
     restauration = listeFiltre;
 
     Gourmet();
