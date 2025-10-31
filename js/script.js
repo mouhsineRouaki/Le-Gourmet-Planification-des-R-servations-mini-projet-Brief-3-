@@ -23,6 +23,7 @@ const btnSupprimer = document.getElementById("btnSupprimer");
 const cardModifierSupprimer = document.getElementById("formModifSuppr");
 const rechercheInput =  document.getElementById("rechercheReservation");
 const filterSelect =  document.getElementById("selectReservation");
+const btnToday =  document.getElementById("btnToday");
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const date = new Date();
 
@@ -54,8 +55,7 @@ function reservationByTitre(titre) {
 }
 function reservationByType(type){
     type = type.trim().toLowerCase();
-    let list;
-    return list = restauration.filter(r => r.type.trim().toLowerCase()=== type);
+    return  restauration.filter(r => r.type.trim().toLowerCase()=== type);
 }
 
 function supprimerReservation(idReservation){
@@ -121,6 +121,10 @@ function Gourmet(){
         if (dayOfWeek === 0 || dayOfWeek === 6) {
             dayDiv.classList.add("disable-div");
         }
+        let currentDate = new Date();
+        if(dayDiv.id === `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${parseInt(currentDate.getDate())}`){
+            dayDiv.style.border = "2px solid red";
+        }
         dayDiv.addEventListener('dragover' , (event)=>{
             event.preventDefault();
         })
@@ -155,16 +159,17 @@ function appendReservations(dayDiv) {
     const type = document.getElementById("typeModifSuppr");
     const date = document.getElementById("dateModifSuppr");
 
+
     reservationsJour.forEach(res => {
         let card = document.createElement("div");
-        card.className = "card mb-1";  // Bootstrap card avec marge
+        card.className = "card mb-1 text-start"; 
         card.style.cursor = "pointer";
         if (res.type === 'VIP') {
-            card.style.backgroundColor = "rgba(255,0,0,0.2)";
+            card.style.backgroundColor = "red";
         } else if (res.type === 'Standard') {
-            card.style.backgroundColor = "rgba(0,255,0,0.2)";
+            card.style.backgroundColor = "green";
         } else {
-            card.style.backgroundColor = "rgba(0,0,255,0.2)";
+            card.style.backgroundColor = "blue";
         }
 
         let cardBody = document.createElement("div");
@@ -205,7 +210,17 @@ function appendReservations(dayDiv) {
 
             newBtnModifier.onclick = function(event) {
                 event.preventDefault();
-                let newDate = new Date(date.value)
+                if(titre.value ==="" || description.value === "" || heureDebut.value === "" || heureFin.value === ""|| nbPersone.value === "" || type.value ===""){
+                    validation(titre,"titre de reservation" , "ce champs est obligatoire");
+                    validation(description,"description de reservation" , "ce champs est obligatoire");
+                    validation(heureDebut,"" , "ce champs est obligatoire");
+                    validation(heureFin,"" , "ce champs est obligatoire");
+                    validation(nbPersone,"nombre persone de reservation" , "ce champs est obligatoire");
+                    validation(type),"type de reservation" , "ce champs est obligatoire";
+                    validation(date),"" , "ce champs est obligatoire";
+                    return;
+                }
+                            let newDate = new Date(date.value)
                 let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth()+1)}-${parseInt(newDate.getDate())}`;
                 const nouvelleReservation = new Reservation(
                     res.id, valeurDate, titre.value, description.value,
@@ -216,6 +231,7 @@ function appendReservations(dayDiv) {
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
+                cardAjout.classList.remove("formAjoutToggle");
             }
 
             newBtnSupprimer.onclick = function(event) {
@@ -225,6 +241,7 @@ function appendReservations(dayDiv) {
                 aficherCard();
                 cover.classList.remove("formAjoutToggle");
                 cardModifierSupprimer.classList.remove("formModifSupprToggle");
+                cardAjout.classList.remove("formAjoutToggle");
             }
         });
 
@@ -272,16 +289,37 @@ function aficherCard(){
 // submit form ajout 
 cardAjout.addEventListener('submit', function(event){
     event.preventDefault();
+    const titreInput = document.getElementById("titre");
+    const descriptionInput =document.getElementById("description");
+    const heureBedutInput = document.getElementById("heure-debut");
+    const heureFinInput = document.getElementById("heure-fin");
+    const nbPersoneInput = document.getElementById("nb-personne");
+    const typeInput = document.getElementById("type");
+    const dateInput = document.getElementById("date");
 
-    const titre = document.getElementById("titre").value;
-    const description = document.getElementById("description").value;
-    const heureBedut = document.getElementById("heure-debut").value;
-    const heureFin = document.getElementById("heure-fin").value;
-    const nbPersone = document.getElementById("nb-personne").value;
-    const type = document.getElementById("type").value;
-    const date = document.getElementById("date").value;
+    const titre = titreInput.value;
+    const description = descriptionInput.value;
+    const heureBedut = heureBedutInput.value;
+    const heureFin = heureFinInput.value;
+    const nbPersone = nbPersoneInput.value;
+    const type = typeInput.value;
+    const date = dateInput.value;
     let newDate = new Date(date)
     let valeurDate = `${newDate.getFullYear()}-${String(newDate.getMonth() + 1)}-${String(parseInt(newDate.getDate()))}`
+
+
+
+
+    if(titre ==="" || description === "" || heureBedut === "" || heureFin === ""|| nbPersone === "" || type ===""){
+        validation(titreInput,"titre de reservation" , "ce champs est obligatoire");
+        validation(descriptionInput,"description de reservation" , "ce champs est obligatoire");
+        validation(heureBedutInput,"" , "ce champs est obligatoire");
+        validation(heureFinInput,"" , "ce champs est obligatoire");
+        validation(nbPersoneInput,"nombre persone de reservation" , "ce champs est obligatoire");
+        validation(typeInput),"type de reservation" , "ce champs est obligatoire";
+        validation(dateInput),"" , "ce champs est obligatoire";
+        return;
+    }
 
     const nouvelleReservation = new Reservation(Date.now(), valeurDate, titre, description, heureBedut, heureFin, nbPersone, type);
     addReservation(nouvelleReservation);
@@ -316,12 +354,12 @@ rechercheInput.addEventListener("input" ,()=>{
 let baseDonnees = JSON.parse(localStorage.getItem("baseDonnes")) || [];
 
 filterSelect.addEventListener('change', () => {
-    let value = filterSelect.value.trim().toLowerCase(); // normaliser
+    let value = filterSelect.value.trim().toLowerCase();
     let listeFiltre;
 
     switch(value){
         case "tous":
-            listeFiltre = [...baseDonnees];
+            listeFiltre = baseDonnees;
             break;
         case "groupe":
             listeFiltre = baseDonnees.filter(r => r.type.toLowerCase() === "groupe");
@@ -342,6 +380,33 @@ filterSelect.addEventListener('change', () => {
     Gourmet();
     aficherCard();
 });
+btnToday.addEventListener("click" , ()=>{
+    let dateNow = new Date();
+    date.setDate(dateNow.getDate())
+    date.setFullYear(dateNow.getFullYear())
+    date.setMonth(dateNow.getMonth())
+    updateDate(0);
+    Gourmet();
+    aficherCard();
+});
+function validation(input,textPlaceHolder,textError){
+    if(input.value === ""){
+        input.style.border = "2px solid red"
+        input.style.color = "red"
+        input.setAttribute("placeholder",textError)
+    }else{
+        input.style.border = "2px solid green"
+        input.style.color = "green"
+        input.setAttribute("placeholder",textPlaceHolder)
+    }
+    input.addEventListener('input' , ()=>{
+            let value = input.value;
+            if(value.length > 0 ){
+                input.style.border = "2px solid green"
+                input.style.color = "green"
+            }
+    });
+}
 
 updateMonthYear();
 Gourmet();
